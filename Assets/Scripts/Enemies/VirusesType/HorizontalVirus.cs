@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class SinusoidVirus : Spawnable
+public class HorizontalVirus : Spawnable
 {
     [SerializeField] float _speed = 3;
     [SerializeField] float _frequency = 2;
@@ -13,7 +13,7 @@ public class SinusoidVirus : Spawnable
     {
 
         Vector3 forwardMovement = _speed * Time.deltaTime * -transform.forward;
-        Vector3 upMovement = Mathf.Sin(Time.time * _frequency) * magnitude * transform.up;
+        Vector3 upMovement = Mathf.Sin(Time.time * _frequency) * magnitude * transform.right;
 
         transform.Translate(forwardMovement + upMovement * _speed * Time.deltaTime);
     }

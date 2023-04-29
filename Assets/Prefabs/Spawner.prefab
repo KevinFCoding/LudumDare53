@@ -47,3 +47,4 @@ MonoBehaviour:
   _spawnablesVirus:
   - {fileID: 2141886458785027830, guid: 30109e3fd953f5c4b93aa377329fc59d, type: 3}
   - {fileID: 2141886458785027830, guid: 448830e20b1eccb41a34471040512b09, type: 3}
+  - {fileID: 2141886458785027830, guid: 54a2c4def9a273446b1f27a9eb3321d0, type: 3}

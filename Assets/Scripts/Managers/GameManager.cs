@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Boxes and Set up")]
     [SerializeField] List<MailBox> _mailboxes;
+    [SerializeField] List<GameObject> _deliveryThreads;
 
     [Header("Game Points and Rewards")]
     public int points = 0;
@@ -26,18 +27,20 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        SetUpLevel();
     }
 
     public void SceneHasChanged()
     {
         _player = FindObjectOfType<Player>();
+        _player.enabled = false;
         if(_gameIsPlaying)
         {
             SetUpLevel();
+            SetUpThreads();
+            LaunchVlopAnimation();
         }
     }
-
+    #region New Scene Set upping
     private void SetUpLevel()
     {
         _mailboxes = new List<MailBox>();
@@ -69,6 +72,23 @@ public class GameManager : MonoBehaviour
             _mailboxes[lose].isLose();
         }
     }
+    private void SetUpThreads()
+    {
+        DeliveryThread[] tempTab = GameObject.FindObjectsOfType<DeliveryThread>();
+        foreach (DeliveryThread dt in tempTab)
+        {
+            _deliveryThreads.Add(dt.gameObject);
+        }
+    }
+
+    private void LaunchVlopAnimation()
+    {
+
+    }
+
+    #endregion
+
+    #region GameFlow
 
     public void StartPlaying()
     {
@@ -104,4 +124,5 @@ public class GameManager : MonoBehaviour
         _gameIsPlaying = false;
         _levelManager.LoadGameOver();
     }
+    #endregion
 }
