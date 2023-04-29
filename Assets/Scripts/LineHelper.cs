@@ -9,7 +9,7 @@ public class LineHelper
         Debug.Log(p1 + " " + p2 + " " + p3 + " " + p4);
         Debug.Log(p1 .x + " " + p3.x + " " + p2.x + " " + p4.x);
 
-        if (p1.x == p3.x && p2.x == p4.x)
+        if ((p1.x == p3.x && p2.x == p4.x) || (p1.x == p4.x && p2.x == p3.x) )
         {
             float a1 = (p2.y - p1.y) / (p2.x - p1.x);
             float b1 = p1.y - a1 * p1.x;
