@@ -20,7 +20,7 @@ public class ClickManager : MonoBehaviour
                 {
                     Debug.Log("On Bar DOWN");
 
-                    line.StartLine(hit.point);
+                    line.StartLine(new Vector3(hit.transform.position.x,hit.point.y, hit.point.z));
                 }
             }
         }
@@ -36,7 +36,7 @@ public class ClickManager : MonoBehaviour
                 if (hit.transform.gameObject.GetComponent<Bar>() != null)
                 {
                     Debug.Log("On Bar UP");
-                    line.StopLine();
+                    line.StopLine(hit.transform.gameObject.transform.position);
                 }
             }
             else

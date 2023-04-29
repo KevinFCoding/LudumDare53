@@ -15,7 +15,6 @@ public class LineController : MonoBehaviour
     private Transform startPoint;
     private Transform endPoint;
 
-    
 
     private void Awake()
     {
@@ -47,15 +46,21 @@ public class LineController : MonoBehaviour
         SetUpLine(startWayPoint.transform, endWayPoint.transform);
     }
 
-    public void StopLine()
+    public void StopLine(Vector3 barPosition)
     {
-        GenerateMeshCollider(drawLineRenderer);
-        if (!drawLineRenderer.GetComponent<Line>().collide)
+        endPoint.position = new Vector3(barPosition.x, endPoint.position.y, endPoint.position.z);
+        drawLineRenderer.SetPosition(1, endPoint.position);
+
+
+        Debug.Log("STOP " + startPoint.position+" "+endPoint.position+" "+drawLineRenderer.GetPosition(0)+" "+drawLineRenderer.GetPosition(1));
+
+        WayPoints wp = new WayPoints(startPoint, endPoint);
+        if (!HasIntersection(wp))
         {
-            Debug.Log("pas collide");
-            AddLine(new WayPoints(startPoint, endPoint));
+            AddLine(wp);
         }
-       DeleteLine();
+        
+        DeleteLine();
     }
 
     public void DeleteLine()
@@ -72,9 +77,6 @@ public class LineController : MonoBehaviour
             Destroy(endPoint.gameObject);
             endPoint = null;
         }
-
-        Destroy(drawLineRenderer.gameObject.GetComponent<Rigidbody>());
-        Destroy(drawLineRenderer.gameObject.GetComponent<MeshCollider>());
     }
 
     void SetUpLine(Transform start, Transform end)
@@ -96,7 +98,7 @@ public class LineController : MonoBehaviour
         line.SetPosition(0, wayPoints.startPoint.position);
         line.SetPosition(1, new Vector3(wayPoints.endPoint.position.x,wayPoints.endPoint.position.y,0));
 
-        GenerateMeshCollider(line);
+        //GenerateMeshCollider(line);
 
         if(lines.Count >= 10)
         {
@@ -109,39 +111,48 @@ public class LineController : MonoBehaviour
         }
     }
 
-    void GenerateMeshCollider(LineRenderer line)
+    bool HasIntersection(WayPoints wp)
     {
-        MeshCollider collider = line.gameObject.AddComponent<MeshCollider>();
-        Rigidbody rigidbody = line.gameObject.AddComponent<Rigidbody>();
-        rigidbody.isKinematic = true;
+        foreach (var item in lines)
+        {
+            LineRenderer lr = item.GetComponent<LineRenderer>();
+            Vector3 intersection;
+            if(LineHelper.HasIntersectionPoint2D(lr.GetPosition(0), lr.GetPosition(1), wp.startPoint.position, wp.endPoint.position, out intersection))
+            {
+                Debug.Log("Intersection " + intersection); 
+                if(LineHelper.IsBetweenPoints(wp.startPoint.position, wp.endPoint.position, intersection))
+                {
+                    Debug.Log("Intersect");
+                    return true;
+                }      
+            }
+        }
+        return false;
+    }
+    void GenerateMeshCollider(LineRenderer lr)
+    {
+        MeshCollider collider = lr.gameObject.GetComponent<MeshCollider>();
+        if (collider == null) {
 
-        line.gameObject.transform.position = new Vector3(0,0, 0);
+            collider = lr.gameObject.AddComponent<MeshCollider>();
+            lr.gameObject.transform.position = new Vector3(0, 0, 0);
+
+            collider.convex = true;
+            collider.isTrigger = true;
+        };
+
+        Rigidbody rigidbody = lr.gameObject.GetComponent<Rigidbody>();
+        if (rigidbody == null) {
+
+            rigidbody = lr.gameObject.AddComponent<Rigidbody>();
+            rigidbody.isKinematic = true;   
+
+       };
 
         Mesh mesh = new Mesh();
         mesh.name = "line-mesh";
 
-        line.BakeMesh(mesh);
-
+        lr.BakeMesh(mesh);
         collider.sharedMesh = mesh;
     }
 }
-
-
-
-//public class GameLinesController : MonoBehaviour
-//{
-//    private LineRenderer fullLineRenderer;
-
-//    private void Awake()
-//    {
-//        fullLineRenderer = GetComponent<LineRenderer>();
-//    }
-
-//    public void AddLine(WayPoints wayPoints)
-//    {
-//        int currentPosition = fullLineRenderer.positionCount;
-
-//        fullLineRenderer.SetPosition(currentPosition + 1, wayPoints.startPoint.position);
-//        fullLineRenderer.SetPosition(currentPosition + 1, wayPoints.endPoint.position);
-//    }
-//}
