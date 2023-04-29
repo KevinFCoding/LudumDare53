@@ -10,9 +10,11 @@ public class Player : MonoBehaviour
     [SerializeField] bool _isInfected = false;
     [SerializeField] Material _playerMat;
     [SerializeField] Material _infectedPlayerMat;
-    // Start is called before the first frame update
-    // Update is called once per frame
 
+    private bool _playerOnWayPoint = false;
+
+
+    float qsd = 0;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Enemy>())
@@ -21,12 +23,20 @@ public class Player : MonoBehaviour
             _isInfected = true;
             gameObject.GetComponent<MeshRenderer>().material = _infectedPlayerMat;
         }
+
+        //if (other.gameObject.GetComponent<>())
+        //{
+
+        //}
     }
 
-    void Update()
+    private void Start()
     {
-        transform.Translate(transform.forward * _speed * Time.deltaTime);
-        CheckForPlayerInput();
+        StartCoroutine(PlayerForwardMovement());
+    }
+
+    private void Update()
+    {
     }
 
     private void CheckForPlayerInput()
@@ -39,5 +49,24 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
         }
+    }
+
+    IEnumerator PlayerForwardMovement()
+    {
+        while(!_playerOnWayPoint)
+        {
+            transform.Translate(transform.forward * _speed * Time.deltaTime);
+            CheckForPlayerInput();
+            yield return null;
+        };
+    }
+    IEnumerator PlayerWaypointMovement()
+    {
+        while (_playerOnWayPoint)
+        {
+            //Vector3.Lerp();
+            CheckForPlayerInput();
+            yield return null;
+        };
     }
 }
