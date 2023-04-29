@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField] float _speed = 10;
     [SerializeField] bool _isInfected = false;
     [SerializeField] Material _playerMat;
     [SerializeField] Material _infectedPlayerMat;
-    // Start is called before the first frame update
-    // Update is called once per frame
+
+    private bool _playerOnWayPoint = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,12 +20,31 @@ public class Player : MonoBehaviour
             _isInfected = true;
             gameObject.GetComponent<MeshRenderer>().material = _infectedPlayerMat;
         }
+
+        if (other.gameObject.GetComponent<MailBox>())
+        {
+            other.gameObject.GetComponent<MailBox>().BoxTouched();
+            gameObject.GetComponent<Player>().enabled = false;
+        }
+
+        //if (other.gameObject.GetComponent<>())
+        //{
+
+        //}
     }
 
-    void Update()
+    private void Start()
     {
-        transform.Translate(transform.forward * _speed * Time.deltaTime);
-        CheckForPlayerInput();
+        StartCoroutine(PlayerForwardMovement());
+    }
+
+    private void Update()
+    {
+    }
+
+    public bool isPlayerInfected()
+    {
+        return _isInfected;
     }
 
     private void CheckForPlayerInput()
@@ -39,5 +57,24 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
         }
+    }
+
+    IEnumerator PlayerForwardMovement()
+    {
+        while(!_playerOnWayPoint)
+        {
+            transform.Translate(transform.forward * _speed * Time.deltaTime);
+            CheckForPlayerInput();
+            yield return null;
+        };
+    }
+    IEnumerator PlayerWaypointMovement()
+    {
+        while (_playerOnWayPoint)
+        {
+            //Vector3.Lerp();
+            CheckForPlayerInput();
+            yield return null;
+        };
     }
 }

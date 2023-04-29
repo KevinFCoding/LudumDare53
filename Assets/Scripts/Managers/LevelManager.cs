@@ -1,18 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager: MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameManager _gameManager;
+
+    private string _currentScene;
+
+    private void Awake()
     {
-        
+        DontDestroyOnLoad(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        _currentScene = SceneManager.GetActiveScene().name;
+    }
+
+    private void Update()
+    {
+        if(_currentScene != SceneManager.GetActiveScene().name)
+        {
+            _gameManager.SceneHasChanged();
+            _currentScene = SceneManager.GetActiveScene().name;
+        }
+        if (Input.GetKeyDown(KeyCode.Space)) LoadLevelOne();
+    }
+
+    public void LoadLevelOne()
+    {
+        SceneManager.LoadScene("Level1");
+    }
+
+    /**
+     *  Load Next level based on the buildIndex
+     */
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void LoadGameOver()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 }
