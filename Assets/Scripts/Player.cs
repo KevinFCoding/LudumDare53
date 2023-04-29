@@ -13,8 +13,6 @@ public class Player : MonoBehaviour
 
     private bool _playerOnWayPoint = false;
 
-
-    float qsd = 0;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Enemy>())
