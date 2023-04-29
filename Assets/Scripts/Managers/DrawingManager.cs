@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class DrawingManager : MonoBehaviour
 {
+    [SerializeField] private GameObject wayPointGO;
     [SerializeField] private LineController lineController;
+
     [SerializeField] private LineRenderer line;
+
     [SerializeField] private Camera _mainCamera;
+
 
     //private List<GameObject> threads = new List<GameObject>();
     [SerializeField] List<GameObject> threads = new List<GameObject>();
+
+    private List<WayPoints> wayPointsList = new List<WayPoints>();
     private List<GameObject> lines = new List<GameObject>();
 
     private GameObject threadStartPoint;
@@ -83,7 +89,7 @@ public class DrawingManager : MonoBehaviour
         Vector3 endPosition = new Vector3(threadSelected.transform.position.x, hit.point.x, hit.point.z);
         WayPoints wp = lineController.StopLine(endPosition);
 
-        if (CanDraw() && !HasIntersection(wp))
+        if (CanDraw() && !HasIntersection(wp) && wp != null)
         {
             AddLine(wp);
         }
@@ -94,14 +100,20 @@ public class DrawingManager : MonoBehaviour
         threads = DeliveryThreads;
     }
 
-    private void AddLine(WayPoints wayPoints)
+    private void AddLine(WayPoints wp)
     {
         LineRenderer line = Instantiate(this.line);
         lines.Add(line.gameObject);
+        wayPointsList.Add(wp);
 
         line.positionCount = 2;
-        line.SetPosition(0, wayPoints.startPoint.position);
-        line.SetPosition(1, new Vector3(wayPoints.endPoint.position.x, 0, wayPoints.endPoint.position.z));
+        line.SetPosition(0, wp.startPoint.position);
+        line.SetPosition(1, new Vector3(wp.endPoint.position.x, 0, wp.endPoint.position.z));
+
+        wayPointGO.GetComponent<WayPoint>().setPoints(wp);
+
+        Instantiate(wayPointGO, wp.startPoint.position, Quaternion.identity);
+        Instantiate(wayPointGO, wp.endPoint.position, Quaternion.identity);
 
         if (lines.Count >= 10)
         {
@@ -110,6 +122,15 @@ public class DrawingManager : MonoBehaviour
             {
                 lines.Remove(lineToRemove);
                 Destroy(lineToRemove);
+            }
+
+            WayPoints wayPointsToRemove = wayPointsList.First();
+            if (wayPointsToRemove != null)
+            {
+                wayPointsList.Remove(wayPointsToRemove);
+
+                Destroy(wayPointsToRemove.startPoint);
+                Destroy(wayPointsToRemove.endPoint);
             }
         }
     }
@@ -146,6 +167,4 @@ public class DrawingManager : MonoBehaviour
         }
         return false;
     }
-
-
 }

@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda0036cafda9c54484c54b0177f2d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wayPointGO: {fileID: 8724923571712592834, guid: 133961586cd5e6b4f8a5ae7a8b1ffa4c, type: 3}
   lineController: {fileID: 5438759441187878068}
   line: {fileID: 7829361040862435582, guid: c959fef7883852948bd8081c5424cc8a, type: 3}
+  _mainCamera: {fileID: 0}
+  threads: []
 --- !u!1 &6617412535749580392
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84184e721026b5f4aa534e15e8850148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wayPointGO: {fileID: 8724923571712592834, guid: 133961586cd5e6b4f8a5ae7a8b1ffa4c, type: 3}
+  drawingWayPointGO: {fileID: 4461024697180499068, guid: 9684846553dc86245b0db5c7c1059bab, type: 3}
 --- !u!120 &7890975464257657257
 LineRenderer:
   m_ObjectHideFlags: 0

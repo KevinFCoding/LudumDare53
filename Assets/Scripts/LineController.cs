@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class LineController : MonoBehaviour
 {
-    [SerializeField] private GameObject wayPointGO;
+    [SerializeField] private GameObject drawingWayPointGO;
     private Camera _mainCamera;
 
     private LineRenderer drawLineRenderer;
 
-    private Transform startPoint;
-    private Transform endPoint;
+    private GameObject startPoint;
+    private GameObject endPoint;
 
 
     private void Awake()
@@ -35,23 +35,31 @@ public class LineController : MonoBehaviour
     
     public void StartLine(Vector3 position)
     {
-        //DeleteLine();
+        DeleteLine();
 
-        GameObject startWayPoint = Instantiate(wayPointGO, position, Quaternion.identity);
-        startWayPoint.name = "Start WayPoint";
+        GameObject startWayPoint = Instantiate(drawingWayPointGO, position, Quaternion.identity);
+        startWayPoint.name = "StartWayPoint";
 
-        GameObject endWayPoint = Instantiate(wayPointGO, position, Quaternion.identity);
-        endWayPoint.name = "End WayPoint";
+        GameObject endWayPoint = Instantiate(drawingWayPointGO, position, Quaternion.identity);
+        endWayPoint.name = "EndWayPoint";
 
-        SetUpLine(startWayPoint.transform, endWayPoint.transform);
+        if (!HasWayPointNear(startWayPoint.transform.position))
+        {
+            SetUpLine(startWayPoint, endWayPoint);
+        }
     }
 
     public WayPoints StopLine(Vector3 barPosition)
     {
-        endPoint.position = new Vector3(barPosition.x, endPoint.position.y, endPoint.position.z);
-        drawLineRenderer.SetPosition(1, endPoint.position);
+        WayPoints wp = null;
 
-        WayPoints wp = new WayPoints(startPoint, endPoint);
+        endPoint.transform.position = new Vector3(barPosition.x, endPoint.transform.position.y, endPoint.transform.position.z);
+        drawLineRenderer.SetPosition(1, endPoint.transform.position);
+
+        if (!HasWayPointNear(endPoint.transform.position))
+        {
+            wp = new WayPoints(startPoint.transform, endPoint.transform);
+        }
         
         DeleteLine();
 
@@ -63,13 +71,13 @@ public class LineController : MonoBehaviour
         drawLineRenderer.positionCount = 0;
         if(startPoint)
         {
-            Destroy(startPoint.gameObject);
+            Destroy(startPoint);
             startPoint = null;
         }
 
         if (endPoint)
         {
-            Destroy(endPoint.gameObject);
+            Destroy(endPoint);
             endPoint = null;
         }
     }
@@ -79,17 +87,28 @@ public class LineController : MonoBehaviour
         _mainCamera = camera;
     }
 
-    void SetUpLine(Transform start, Transform end)
+    void SetUpLine(GameObject start, GameObject end)
     {
         drawLineRenderer.positionCount = 2;
 
         this.startPoint = start;
         this.endPoint = end;
 
-        Vector3 initialPosition = new Vector3(start.position.x, 0, start.position.z);
+        Vector3 initialPosition = new Vector3(start.transform.position.x, 0, start.transform.position.z);
         Debug.Log("initialPosition" + initialPosition);
 
         drawLineRenderer.SetPosition(0, initialPosition);
         drawLineRenderer.SetPosition(1, initialPosition);
+    }
+
+    bool HasWayPointNear(Vector3 center)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, .5f);
+        List<Collider> list = hitColliders.Where(c => c.GetComponent<WayPoint>() != null && c.name != "StartWayPoint" && c.name != "EndWayPoint").ToList();
+
+        Debug.Log("NEAR " + list.Count);
+
+        return list.Count > 0 ? true : false;
+
     }
 }
