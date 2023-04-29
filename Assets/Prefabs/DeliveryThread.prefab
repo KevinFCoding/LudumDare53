@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 8544971695044522333}
   - component: {fileID: 8544971695044522332}
   - component: {fileID: 1567273525544640114}
+  - component: {fileID: 9129635480041341771}
   m_Layer: 0
   m_Name: DeliveryThread
   m_TagString: Untagged
@@ -265,6 +266,18 @@ MonoBehaviour:
   - {fileID: 1349105817681849600}
   - {fileID: 9149560177032798452}
   - {fileID: 6357259985366827371}
+--- !u!114 &9129635480041341771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544971695044522334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f67babfb60c9d4e9cfecf5385dfb11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &179563685646127986
 PrefabInstance:
   m_ObjectHideFlags: 0
