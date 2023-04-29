@@ -35,9 +35,9 @@ public class SettingsWindow : MonoBehaviour
     {
         audioMixer.SetFloat("music", volume);
     }
-    public void SetVolumeSound(float volume)
+    public void SetVolumeSound(float soundVolume)
     {
-        audioMixer.SetFloat("sound", volume);
+        audioMixer.SetFloat("sound", soundVolume);
 
     }
 }
