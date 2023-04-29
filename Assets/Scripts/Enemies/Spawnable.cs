@@ -4,4 +4,7 @@ using UnityEngine;
 
 public class Spawnable : Enemy
 {
+    public override void HasTouchedPlayer()
+    {
+    }
 }
