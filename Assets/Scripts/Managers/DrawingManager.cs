@@ -8,7 +8,12 @@ public class DrawingManager : MonoBehaviour
     [SerializeField] private LineController lineController;
     [SerializeField] private LineRenderer line;
 
+    [SerializeField] private List<GameObject> threads = new List<GameObject>();
+
     private List<GameObject> lines = new List<GameObject>();
+
+    private GameObject threadStartPoint;
+    private GameObject threadEndPoint;
 
     void Update()
     {
@@ -20,11 +25,9 @@ public class DrawingManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
-                if (hit.transform.gameObject.GetComponent<Bar>() != null)
+                if (hit.transform.gameObject.GetComponent<Bar>() != null && threads.Contains(hit.transform.gameObject))
                 {
-                    Debug.Log("On Bar DOWN");
-
-                    StartDrawing(new Vector3(hit.transform.position.x, hit.point.y, hit.point.z));
+                    StartDrawing(hit);
                 }
             }
         }
@@ -40,7 +43,7 @@ public class DrawingManager : MonoBehaviour
                 if (hit.transform.gameObject.GetComponent<Bar>() != null)
                 {
                     Debug.Log("On Bar UP");
-                    StopDrawing(hit.transform.gameObject.transform.position);
+                    StopDrawing(hit);
                 }
                 else
                 {
@@ -57,16 +60,24 @@ public class DrawingManager : MonoBehaviour
     }
 
 
-    public void StartDrawing(Vector2 position)
+    public void StartDrawing(RaycastHit hit)
     {
-        lineController.StartLine(position);
+        GameObject threadSelected = hit.transform.gameObject;
+        threadStartPoint = threadSelected;
+
+        Vector3 startPosition = new Vector3(threadSelected.transform.position.x, hit.point.y, hit.point.z);
+        lineController.StartLine(startPosition);
     }
 
-    public void StopDrawing(Vector3 barPosition)
+    public void StopDrawing(RaycastHit hit)
     {
+        GameObject threadSelected = hit.transform.gameObject;
+        threadEndPoint = threadSelected;
 
-        WayPoints wp = lineController.StopLine(barPosition);
-        if (!HasIntersection(wp))
+        Vector3 endPosition = new Vector3(threadSelected.transform.position.x, hit.point.y, hit.point.z);
+        WayPoints wp = lineController.StopLine(endPosition);
+
+        if (CanDraw() && !HasIntersection(wp))
         {
             AddLine(wp);
         }
@@ -107,6 +118,20 @@ public class DrawingManager : MonoBehaviour
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    bool CanDraw()
+    {
+        int threadOneIndex = threads.FindIndex(t => t.transform.position == threadStartPoint.transform.position);
+        int threadTwoIndex = threads.FindIndex(t => t.transform.position == threadEndPoint.transform.position);
+
+        Debug.Log(threadOneIndex + " " + threadTwoIndex);
+
+        if((threadOneIndex + 1 == threadTwoIndex) || (threadOneIndex - 1 == threadTwoIndex))
+        {
+            return true;
         }
         return false;
     }

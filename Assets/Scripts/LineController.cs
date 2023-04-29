@@ -78,6 +78,9 @@ public class LineController : MonoBehaviour
         this.startPoint = start;
         this.endPoint = end;
 
-        drawLineRenderer.SetPosition(0, new Vector3(start.position.x, start.position.y,0));
+        Vector3 initialPosition = new Vector3(start.position.x, start.position.y, 0);
+
+        drawLineRenderer.SetPosition(0, initialPosition);
+        drawLineRenderer.SetPosition(1, initialPosition);
     }
 }
