@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe62af267726194b8286fd019057d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mailBoxMat: {fileID: 2100000, guid: d1ec05c636b993c4bae85a6525da0589, type: 2}
 --- !u!1 &8544971695044522334
 GameObject:
   m_ObjectHideFlags: 0

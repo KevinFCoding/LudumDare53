@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     [SerializeField] float _speed = 10;
     [SerializeField] bool _isInfected = false;
     [SerializeField] Material _playerMat;
@@ -22,6 +21,11 @@ public class Player : MonoBehaviour
             gameObject.GetComponent<MeshRenderer>().material = _infectedPlayerMat;
         }
 
+        if (other.gameObject.GetComponent<MailBox>())
+        {
+            gameObject.GetComponent<Player>().enabled = false;
+        }
+
         //if (other.gameObject.GetComponent<>())
         //{
 
@@ -35,6 +39,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+    }
+
+    public bool isPlayerInfected()
+    {
+        return _isInfected;
     }
 
     private void CheckForPlayerInput()
