@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a8a5f0d9431cb4695cacaf7e23a3bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameManager: {fileID: 0}
+  _gameManager: {fileID: 725842391}
 --- !u!1001 &435078969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -438,6 +438,7 @@ MonoBehaviour:
   _soundManager: {fileID: 1393159522}
   _player: {fileID: 878891639}
   _mailboxes: []
+  points: 0
 --- !u!1 &878891632 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7473383515736146266, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}

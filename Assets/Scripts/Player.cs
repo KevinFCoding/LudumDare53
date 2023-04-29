@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
 
         if (other.gameObject.GetComponent<MailBox>())
         {
+            other.gameObject.GetComponent<MailBox>().BoxTouched();
             gameObject.GetComponent<Player>().enabled = false;
         }
 

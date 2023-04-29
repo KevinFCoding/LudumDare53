@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Points and Rewards")]
     public int points = 0;
+    public bool perfectDelivery = true;
 
     private bool _gameIsPlaying = false;
 
@@ -54,8 +55,7 @@ public class GameManager : MonoBehaviour
         if (_mailboxes.Count == 1) _mailboxes[0].isWin();
         else if (_mailboxes.Count == 2)
         {
-            _mailboxes[0].isWin();
-            _mailboxes[1].isLose();
+            _mailboxes[0].isWin(); 
         }
         else if (_mailboxes.Count >= 3)
         {
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         if(boxDelivered == "spam")
         {
             if (_player.isPlayerInfected()) points += 2;
+            perfectDelivery = false;
             LevelOver();
         }
         else if (boxDelivered == "win")
@@ -88,8 +89,9 @@ public class GameManager : MonoBehaviour
             LevelOver();
         } else if (boxDelivered == "lose")
         {
+            perfectDelivery = false;
             GameOver();
-        }
+        }   
     }
 
     public void LevelOver()

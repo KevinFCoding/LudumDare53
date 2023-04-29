@@ -29,7 +29,7 @@ public class MailBox : MonoBehaviour
         _isWin = true;
         _isLose = false;
 
-        gameObject.GetComponent<MeshRenderer>().material.color = new Color(255, 0, 0);
+        gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 255, 0);
     }
     public void isLose()
     {
@@ -37,7 +37,7 @@ public class MailBox : MonoBehaviour
         _isWin = false;
         _isLose = true;
 
-        gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 255, 0);
+        gameObject.GetComponent<MeshRenderer>().material.color = new Color(255, 0, 0);
     }
 
     public void BoxTouched()
