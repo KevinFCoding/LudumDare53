@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Managers")]
     [SerializeField] LevelManager _levelManager;
     [SerializeField] SoundManager _soundManager;
+    [SerializeField] DrawingManager _drawingManager;
+
     [SerializeField] Player _player;
 
     [Header("Boxes and Set up")]
@@ -29,9 +32,20 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("KFScene"))
+        {
+            _drawingManager = FindObjectOfType<DrawingManager>();
+            SetUpLevel();
+            SetUpThreads();
+        }
+    }
+
     public void SceneHasChanged()
     {
         _player = FindObjectOfType<Player>();
+        _drawingManager = FindObjectOfType<DrawingManager>();
         _player.enabled = false;
         if(_gameIsPlaying)
         {
@@ -74,11 +88,14 @@ public class GameManager : MonoBehaviour
     }
     private void SetUpThreads()
     {
-        DeliveryThread[] tempTab = GameObject.FindObjectsOfType<DeliveryThread>();
+        GameObject gameObject = GameObject.Find("DeliveryThreads"); 
+        DeliveryThread[] tempTab = gameObject.GetComponentsInChildren<DeliveryThread>();
+
         foreach (DeliveryThread dt in tempTab)
         {
             _deliveryThreads.Add(dt.gameObject);
         }
+            _drawingManager.SetThread(_deliveryThreads);
     }
 
     private void LaunchVlopAnimation()

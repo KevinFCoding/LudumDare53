@@ -11,11 +11,11 @@ public class LineHelper
 
         if ((p1.x == p3.x && p2.x == p4.x) || (p1.x == p4.x && p2.x == p3.x) )
         {
-            float a1 = (p2.y - p1.y) / (p2.x - p1.x);
-            float b1 = p1.y - a1 * p1.x;
+            float a1 = (p2.z - p1.z) / (p2.x - p1.x);
+            float b1 = p1.z - a1 * p1.x;
 
-            float a2 = (p4.y - p3.y) / (p4.x - p3.x);
-            float b2 = p3.y - a2 * p3.x;
+            float a2 = (p4.z - p3.z) / (p4.x - p3.x);
+            float b2 = p3.z - a2 * p3.x;
 
             float x = (b2 - b1) / (a1 - a2);
 
