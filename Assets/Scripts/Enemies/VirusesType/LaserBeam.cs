@@ -5,7 +5,7 @@ using UnityEngine;
 public class LaserBeam : Spawnable
 {
     private float _toggleLaserTimer;
-    private float _toggleLaserTimerMax = 1.5f;
+    private float _toggleLaserTimerMax;
     private bool _isActive;
     private float _waintingForActivationAnimation;
 
@@ -19,6 +19,7 @@ public class LaserBeam : Spawnable
         _collider = GetComponent<BoxCollider>();
         _renderer = GetComponentInChildren<SpriteRenderer>();
         _animator = GetComponentInChildren<Animator>();
+        _toggleLaserTimerMax = Random.Range(1f, 3f);
     }
 
     private void Update()
