@@ -107,7 +107,6 @@ public class GameManager : MonoBehaviour
 
     public void StartPlaying()
     {
-        _levelManager.LoadLevelOne();
         _gameIsPlaying = true;
     }
 

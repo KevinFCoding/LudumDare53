@@ -1,4 +1,4 @@
-using System.Collections; 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
@@ -38,17 +38,19 @@ public class GameCanvasManager : MonoBehaviour
     {
         float time = 0;
         Color _playerGFXColor = _playerGFX.GetComponent<SpriteRenderer>().color;
-        while (time < 1) {
+        while (time < 1f)
+        {
             time += Time.deltaTime;
-            _playerGFXColor.a = Mathf.Lerp(_playerGFXColor.a, 1, 1f / time);
+            _playerGFXColor.a = Mathf.Lerp(_playerGFXColor.a, 1f, time / 1f);
             _playerGFX.GetComponent<SpriteRenderer>().color = _playerGFXColor;
             yield return null;
         }
         if (time >= 1)
         {
+            _gameManager.StartPlaying();
             _gameManager.SceneHasChanged();
             _nudeAnim.SetActive(false);
 
-         }
+        }
     }
 }
