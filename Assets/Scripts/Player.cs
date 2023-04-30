@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] Material _playerMat;
     [SerializeField] Material _infectedPlayerMat;
 
-    private bool _playerOnWayPoint = false;
+    private bool _isPlayerOnWayPoint = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -26,11 +26,16 @@ public class Player : MonoBehaviour
             other.gameObject.GetComponent<MailBox>().BoxTouched();
             gameObject.GetComponent<Player>().enabled = false;
         }
-
-        //if (other.gameObject.GetComponent<>())
-        //{
-
-        //}
+        if (other.gameObject.GetComponent<WayPoint>())
+        {
+            WayPoints wps = other.gameObject.GetComponent<WayPoint>().GetPoints();
+            if (wps == null)
+            {
+                return;
+            }
+            _isPlayerOnWayPoint = true;
+            StartCoroutine(PlayerTranslateToWaypoint(wps));
+        }
     }
 
     private void Start()
@@ -47,34 +52,69 @@ public class Player : MonoBehaviour
         return _isInfected;
     }
 
-    private void CheckForPlayerInput()
-    {
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            transform.position = new Vector3(transform.position.x + 3, transform.position.y, transform.position.z);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
-        }
-    }
+    //private void CheckForPlayerInput()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.D))
+    //    {
+    //        transform.position = new Vector3(transform.position.x + 3, transform.position.y, transform.position.z);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.Q))
+    //    {
+    //        transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
+    //    }
+    //}
 
     IEnumerator PlayerForwardMovement()
     {
-        while(!_playerOnWayPoint)
+        while (!_isPlayerOnWayPoint)
         {
             transform.Translate(transform.forward * _speed * Time.deltaTime);
-            CheckForPlayerInput();
             yield return null;
         };
     }
-    IEnumerator PlayerWaypointMovement()
+
+    IEnumerator PlayerTranslateToWaypoint(WayPoints waypoints)
     {
-        while (_playerOnWayPoint)
+        float time = 0;
+        Vector3 startPos = transform.position;
+        Vector3 endPos = waypoints.startPoint.position;
+        float distance = Vector3.Distance(startPos, endPos);
+        float timeToReach = distance / _speed;
+        while (time < timeToReach)
         {
-            //Vector3.Lerp();
-            CheckForPlayerInput();
+            time += Time.deltaTime;
+            //transform.Translate((waypoints.endPoint.position - waypoints.startPoint.position).normalized * _speed);
+            transform.position = Vector3.Lerp(startPos, endPos, time / timeToReach);
             yield return null;
         };
+        if (time >= timeToReach)
+        {
+            StartCoroutine(PlayerWaypointMovement(waypoints));
+        }
+    }
+
+    IEnumerator PlayerWaypointMovement(WayPoints waypoints)
+    {
+        float time = 0;
+        Debug.Log(waypoints.startPoint + " " + waypoints.endPoint);
+        Vector3 startPos = waypoints.startPoint.position;
+        Vector3 endPos = waypoints.endPoint.position;
+        waypoints.startPoint.gameObject.SetActive(false);
+        waypoints.endPoint.gameObject.SetActive(false);
+        float distance = Vector3.Distance(startPos, endPos);
+        float timeToReach = distance / _speed;
+        while (time < timeToReach)
+        {
+            time += Time.deltaTime;
+            //transform.Translate((waypoints.endPoint.position - waypoints.startPoint.position).normalized * _speed);
+            transform.position = Vector3.Lerp(startPos, endPos, time / timeToReach);
+            yield return null;
+        };
+        if (time >= timeToReach)
+        {
+            _isPlayerOnWayPoint = false;
+
+            StartCoroutine(PlayerForwardMovement());
+        }
     }
 }

@@ -24,43 +24,33 @@ public class LineController : MonoBehaviour
 
         if (Input.GetMouseButton(0) && endPoint != null)
         {
-            Debug.Log("qshdsqjdkqshdkjqsd");
             Vector3 mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log("Mouse Position " + mousePosition);
-            endPoint.transform.position = mousePosition;
-
+            endPoint.transform.position = new Vector3(mousePosition.x, 0, mousePosition.y);
             drawLineRenderer.SetPosition(1, new Vector3(mousePosition.x, 0, mousePosition.z));
         }
     }
-    
+
     public void StartLine(Vector3 position)
     {
         DeleteLine();
-
         GameObject startWayPoint = Instantiate(drawingWayPointGO, position, Quaternion.identity);
         startWayPoint.name = "StartWayPoint";
-
         GameObject endWayPoint = Instantiate(drawingWayPointGO, position, Quaternion.identity);
         endWayPoint.name = "EndWayPoint";
-
-        if (!HasWayPointNear(startWayPoint.transform.position))
-        {
-            SetUpLine(startWayPoint, endWayPoint);
-        }
+        SetUpLine(startWayPoint, endWayPoint);
     }
 
-    public WayPoints StopLine(Vector3 barPosition)
+    public WayPoints StopLine(Vector3 endPosition)
     {
         WayPoints wp = null;
-
-        endPoint.transform.position = new Vector3(barPosition.x, endPoint.transform.position.y, endPoint.transform.position.z);
+        endPoint.transform.position = new Vector3(endPosition.x, endPoint.transform.position.y, endPosition.z);
         drawLineRenderer.SetPosition(1, endPoint.transform.position);
 
         if (!HasWayPointNear(endPoint.transform.position))
         {
             wp = new WayPoints(startPoint.transform, endPoint.transform);
         }
-        
+
         DeleteLine();
 
         return wp;
@@ -69,7 +59,7 @@ public class LineController : MonoBehaviour
     public void DeleteLine()
     {
         drawLineRenderer.positionCount = 0;
-        if(startPoint)
+        if (startPoint)
         {
             Destroy(startPoint);
             startPoint = null;
@@ -95,8 +85,6 @@ public class LineController : MonoBehaviour
         this.endPoint = end;
 
         Vector3 initialPosition = new Vector3(start.transform.position.x, 0, start.transform.position.z);
-        Debug.Log("initialPosition" + initialPosition);
-
         drawLineRenderer.SetPosition(0, initialPosition);
         drawLineRenderer.SetPosition(1, initialPosition);
     }
@@ -105,8 +93,6 @@ public class LineController : MonoBehaviour
     {
         Collider[] hitColliders = Physics.OverlapSphere(center, .5f);
         List<Collider> list = hitColliders.Where(c => c.GetComponent<WayPoint>() != null && c.name != "StartWayPoint" && c.name != "EndWayPoint").ToList();
-
-        Debug.Log("NEAR " + list.Count);
 
         return list.Count > 0 ? true : false;
 

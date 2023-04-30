@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class WayPoint : MonoBehaviour
 {
-    WayPoints points;
+    public WayPoints points;
 
-    public void setPoints(WayPoints wp)
+    public void SetPoints(WayPoints wp)
     {
         this.points = wp;
     }
 
-    public WayPoints getPoints()
+    public WayPoints GetPoints()
     {
         return this.points;
     }
