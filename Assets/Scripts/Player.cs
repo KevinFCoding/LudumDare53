@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -10,7 +12,15 @@ public class Player : MonoBehaviour
     [SerializeField] Material _playerMat;
     [SerializeField] Material _infectedPlayerMat;
 
-    private bool _playerOnWayPoint = false;
+    private bool _isPlayerOnWayPoint = false;
+    private bool _isTranslatingToWaypoint = false;
+
+    private List<WayPoint> _nextWaypoint;
+
+    private void Awake()
+    {
+        _nextWaypoint = new();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,11 +38,13 @@ public class Player : MonoBehaviour
             other.gameObject.GetComponent<MailBox>().BoxTouched();
             gameObject.GetComponent<Player>().enabled = false;
         }
-
-        //if (other.gameObject.GetComponent<>())
-        //{
-
-        //}
+        if (other.gameObject.GetComponent<WayPoint>())
+        {
+            if (other.gameObject.GetComponent<WayPoint>().IsActive && !_nextWaypoint.Contains(other.gameObject.GetComponent<WayPoint>()))
+            {
+                _nextWaypoint.Add(other.gameObject.GetComponent<WayPoint>());
+            }
+        }
     }
 
     private void Start()
@@ -42,6 +54,29 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (!_isTranslatingToWaypoint && _nextWaypoint.Count > 0)
+        {
+            WayPoint fwp = _nextWaypoint.First();
+
+            if (fwp != null)
+            {
+                if (fwp.gameObject.transform.position.x == transform.position.x && fwp.gameObject.transform.position.z >= transform.position.z)
+                {
+                    WayPoints wps = fwp.GetPoints();
+                    if (wps == null)
+                    {
+                        return;
+                    }
+                    _isPlayerOnWayPoint = true;
+                    StartCoroutine(PlayerTranslateToWaypoint(wps));
+                }
+                else
+                {
+                    _nextWaypoint.Remove(fwp);
+                }
+            }
+
+        }
     }
 
     public bool isPlayerInfected()
@@ -49,34 +84,72 @@ public class Player : MonoBehaviour
         return _isInfected;
     }
 
-    private void CheckForPlayerInput()
-    {
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            transform.position = new Vector3(transform.position.x + 3, transform.position.y, transform.position.z);
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
-        }
-    }
+    //private void CheckForPlayerInput()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.D))
+    //    {
+    //        transform.position = new Vector3(transform.position.x + 3, transform.position.y, transform.position.z);
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.Q))
+    //    {
+    //        transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
+    //    }
+    //}
 
     IEnumerator PlayerForwardMovement()
     {
-        while(!_playerOnWayPoint)
+        while (!_isPlayerOnWayPoint)
         {
             transform.Translate(transform.forward * _speed * Time.deltaTime);
-            CheckForPlayerInput();
             yield return null;
         };
     }
-    IEnumerator PlayerWaypointMovement()
+
+    IEnumerator PlayerTranslateToWaypoint(WayPoints waypoints)
     {
-        while (_playerOnWayPoint)
+        _isTranslatingToWaypoint = true;
+        _nextWaypoint.Remove(_nextWaypoint.First());
+        waypoints.startPoint.gameObject.GetComponent<WayPoint>().IsActive = false;
+        waypoints.endPoint.gameObject.GetComponent<WayPoint>().IsActive = false;
+        float time = 0;
+        Vector3 startPos = transform.position;
+        Vector3 endPos = waypoints.startPoint.position;
+        float distance = Vector3.Distance(startPos, endPos);
+        float timeToReach = distance / _speed;
+        while (time < timeToReach)
         {
-            //Vector3.Lerp();
-            CheckForPlayerInput();
+            time += Time.deltaTime;
+            //transform.Translate((waypoints.endPoint.position - waypoints.startPoint.position).normalized * _speed);
+            transform.position = Vector3.Lerp(startPos, endPos, time / timeToReach);
             yield return null;
         };
+        if (time >= timeToReach)
+        {
+            StartCoroutine(PlayerWaypointMovement(waypoints));
+        }
+    }
+
+    IEnumerator PlayerWaypointMovement(WayPoints waypoints)
+    {
+        float time = 0;
+        Debug.Log(waypoints.startPoint + " " + waypoints.endPoint);
+        Vector3 startPos = waypoints.startPoint.position;
+        Vector3 endPos = waypoints.endPoint.position;
+        float distance = Vector3.Distance(startPos, endPos);
+        float timeToReach = distance / _speed;
+        while (time < timeToReach)
+        {
+            time += Time.deltaTime;
+            //transform.Translate((waypoints.endPoint.position - waypoints.startPoint.position).normalized * _speed);
+            transform.position = Vector3.Lerp(startPos, endPos, time / timeToReach);
+            yield return null;
+        };
+        if (time >= timeToReach)
+        {
+            _isPlayerOnWayPoint = false;
+            _isTranslatingToWaypoint = false;
+            StartCoroutine(PlayerForwardMovement());
+        }
+
     }
 }

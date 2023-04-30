@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class LineController : MonoBehaviour
 {
-    [SerializeField] private GameObject wayPointGO;
+    [SerializeField] private GameObject drawingWayPointGO;
     private Camera _mainCamera;
 
     private LineRenderer drawLineRenderer;
 
-    private Transform startPoint;
-    private Transform endPoint;
+    private GameObject startPoint;
+    private GameObject endPoint;
 
 
     private void Awake()
@@ -24,52 +24,57 @@ public class LineController : MonoBehaviour
 
         if (Input.GetMouseButton(0) && endPoint != null)
         {
-            Debug.Log("qshdsqjdkqshdkjqsd");
             Vector3 mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log("Mouse Position " + mousePosition);
-            endPoint.transform.position = mousePosition;
-
+            endPoint.transform.position = new Vector3(mousePosition.x, 0 , mousePosition.z);
             drawLineRenderer.SetPosition(1, new Vector3(mousePosition.x, 0, mousePosition.z));
         }
     }
-    
+
     public void StartLine(Vector3 position)
     {
-        //DeleteLine();
-
-        GameObject startWayPoint = Instantiate(wayPointGO, position, Quaternion.identity);
-        startWayPoint.name = "Start WayPoint";
-
-        GameObject endWayPoint = Instantiate(wayPointGO, position, Quaternion.identity);
-        endWayPoint.name = "End WayPoint";
-
-        SetUpLine(startWayPoint.transform, endWayPoint.transform);
+        DeleteLine();
+        if (!HasWayPointNear(position))
+        {
+            GameObject startWayPoint = Instantiate(drawingWayPointGO, position, Quaternion.identity);
+            startWayPoint.name = "StartWayPoint";
+            GameObject endWayPoint = Instantiate(drawingWayPointGO, position, Quaternion.identity);
+            endWayPoint.name = "EndWayPoint";
+            SetUpLine(startWayPoint, endWayPoint);
+        }
     }
 
-    public WayPoints StopLine(Vector3 barPosition)
+    public Vector3[] StopLineAndGetWaypointsPositions(Vector3 endPosition)
     {
-        endPoint.position = new Vector3(barPosition.x, endPoint.position.y, endPoint.position.z);
-        drawLineRenderer.SetPosition(1, endPoint.position);
+        Vector3[] positions = new Vector3[2];
+        if (endPoint != null)
+        {
+            endPoint.transform.position = endPosition;
+            drawLineRenderer.SetPosition(1, endPoint.transform.position);
 
-        WayPoints wp = new WayPoints(startPoint, endPoint);
-        
+            if (!HasWayPointNear(endPoint.transform.position))
+            {
+                positions[0] = startPoint.transform.position;
+                positions[1] =  endPoint.transform.position;
+            }
+        }
+
         DeleteLine();
 
-        return wp;
+        return positions;
     }
 
     public void DeleteLine()
     {
         drawLineRenderer.positionCount = 0;
-        if(startPoint)
+        if (startPoint)
         {
-            Destroy(startPoint.gameObject);
+            Destroy(startPoint);
             startPoint = null;
         }
 
         if (endPoint)
         {
-            Destroy(endPoint.gameObject);
+            Destroy(endPoint);
             endPoint = null;
         }
     }
@@ -79,17 +84,24 @@ public class LineController : MonoBehaviour
         _mainCamera = camera;
     }
 
-    void SetUpLine(Transform start, Transform end)
+    void SetUpLine(GameObject start, GameObject end)
     {
         drawLineRenderer.positionCount = 2;
 
         this.startPoint = start;
         this.endPoint = end;
 
-        Vector3 initialPosition = new Vector3(start.position.x, 0, start.position.z);
-        Debug.Log("initialPosition" + initialPosition);
-
+        Vector3 initialPosition = new Vector3(start.transform.position.x, 0, start.transform.position.z);
         drawLineRenderer.SetPosition(0, initialPosition);
         drawLineRenderer.SetPosition(1, initialPosition);
+    }
+
+    bool HasWayPointNear(Vector3 center)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(center, 0f);
+        List<Collider> list = hitColliders.Where(c => c.GetComponent<WayPoint>() != null && c.name != "StartWayPoint" && c.name != "EndWayPoint").ToList();
+
+        return list.Count > 0 ? true : false;
+
     }
 }

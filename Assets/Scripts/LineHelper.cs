@@ -6,8 +6,7 @@ public class LineHelper
 {
     public static bool HasIntersectionPoint2D(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4, out Vector3 intersection)
     {
-        Debug.Log(p1 + " " + p2 + " " + p3 + " " + p4);
-        Debug.Log(p1 .x + " " + p3.x + " " + p2.x + " " + p4.x);
+        Debug.Log("HAS I?TERSECTIO? STARTT CHECK");
 
         if ((p1.x == p3.x && p2.x == p4.x) || (p1.x == p4.x && p2.x == p3.x) )
         {
@@ -22,11 +21,13 @@ public class LineHelper
             if (double.IsNormal(x))
             {
                 float y = a1 * x + b1;
-                intersection = new Vector3(x, y, 0);
+                intersection = new Vector3(x, 0, y) ;
+                Debug.Log("HAS I?TERSECTIO? STARTT CHECK TRUR");
                 return true;
             }
         }
         intersection = Vector3.zero;
+        Debug.Log("HAS I?TERSECTIO? STARTT CHECK FQLSE");
         return false;
     }
 
