@@ -24,13 +24,13 @@ public class EndingManager : MonoBehaviour
     [SerializeField] GameObject _victoryImage;
 
 
-    [Header("Defeate")]
+    [Header("Defeat")]
 
     [SerializeField] GameObject _looseParticules;
     [SerializeField] GameObject _loosePanel;
     [SerializeField] GameObject _looseImage;
 
-    [Header("GrampaDefeate")]
+    [Header("GrampaDefeat")]
 
     [SerializeField] GameObject _looseGPParticules;
     [SerializeField] GameObject _looseGPPanel;
@@ -42,17 +42,48 @@ public class EndingManager : MonoBehaviour
     [SerializeField] GameObject _brotherPanel;
     [SerializeField] GameObject _brotherImage;
 
-    void Start()
+    private void Awake()
     {
-
-        // print("Start");
-        //  Win();
-        StartCoroutine(ActiveSpamPanel());
+        DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
+    public void GetAllParticles()
     {
-        
+        //_winParticules = GameObject.FindObjectsOfTypeAll<>();
+        GameObject FindVlop = GameObject.FindObjectOfType<Player>().gameObject;
+        GameObject findParticles = FindVlop.transform.GetChild(FindVlop.transform.childCount - 1).gameObject; ;
+        Debug.Log("PARTICULES " + findParticles.name + " is empty");
+        //GameObject findParticles = FindVlop.transform.GetChild(FindVlop.transform.GetChildCount() - 1).gameObject;
+        //GameObject[] ChildNames = findParticles.GetComponentsInChildren<GameObject>(includeInactive: true);
+        ParticleSystem[] ChildNames = findParticles.GetComponentsInChildren<ParticleSystem>(includeInactive: true);
+
+        Debug.Log("CHILD NAMES AAA " + ChildNames);
+        Debug.Log("CHILD NAMES LENGTH  AAA" + ChildNames.Length);
+        for (int i = 0; i < ChildNames.Length; i++)
+        {
+            string name = ChildNames[i].gameObject.name;
+            Debug.Log("NAME " + name);
+            switch (name)
+            {
+                case "Win_part":
+                    _winParticules = ChildNames[i].gameObject;
+                    break;
+                case "Spam_part":
+                    _spamParticules = ChildNames[i].gameObject;
+                    break;
+                case "Granny_part":
+                     _looseParticules = ChildNames[i].gameObject;
+                    break;
+                case "Dad_part":
+                    _looseGPParticules = ChildNames[i].gameObject;
+                    break;
+                case "Bro_part":
+                    _brotherParticules = ChildNames[i].gameObject;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void Loose()
@@ -85,6 +116,14 @@ public class EndingManager : MonoBehaviour
         _victoryPanel.SetActive(true);
         StartCoroutine(ActiveEndingWinPanel());
     }
+    public void Spam()
+    {
+        audioSource.PlayOneShot(stampSound, 5);
+
+        _spamPanel.SetActive(true);
+        StartCoroutine(ActiveSpamPanel());
+    }
+
 
     IEnumerator ActiveSpamPanel()
     {

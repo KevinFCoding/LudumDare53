@@ -4,48 +4,33 @@ using UnityEngine;
 
 public class MailBox : MonoBehaviour
 {
-    [SerializeField] Material _mailBoxMat;
+    [SerializeField] string _nameBox = null;
+    [SerializeField] GameObject _mailBoxGFX;
     [SerializeField] GameManager _gameManager;
 
-    private bool _isSpam;
-    private bool _isWin;
-    private bool _isLose;
+    public string nameBox
+    {
+        get { return _nameBox; }
+    }
 
     private void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
+        _nameBox = null;
     }
-    public void isSpam()
+    public void MailBoxName(string nameBox)
     {
-        _isSpam = true;
-        _isWin = false;
-        _isLose = false;
-
-        gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 0, 255);
-    }
-    public void isWin()
-    {
-        _isSpam = false;
-        _isWin = true;
-        _isLose = false;
-
-        gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 255, 0);
-    }
-    public void isLose()
-    {
-        _isSpam = false;
-        _isWin = false;
-        _isLose = true;
-
-        gameObject.GetComponent<MeshRenderer>().material.color = new Color(255, 0, 0);
+        Debug.Log("MAIL BOX NAME CALLED " + nameBox);
+        _nameBox = nameBox;
+        for (int i = 0; i < _mailBoxGFX.transform.childCount; i++)
+        {
+            GameObject icon = _mailBoxGFX.transform.GetChild(i).gameObject;
+            if (_nameBox == icon.name) icon.SetActive(true);
+        }
     }
 
     public void BoxTouched()
     {
-        string boxTouched = "";
-        if (_isSpam) boxTouched = "spam";
-        if (_isWin) boxTouched = "win";
-        if (_isLose) boxTouched = "lose";
-        _gameManager.PlayerHasDeliveredTheMail(boxTouched);
+        _gameManager.PlayerHasDeliveredTheMail(_nameBox);
     }
 }

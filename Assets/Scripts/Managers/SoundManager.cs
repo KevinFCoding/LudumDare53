@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     public void Awake()
     {
         if(instance != null) return;
+        DontDestroyOnLoad(gameObject);
 
     }
     void Start()

@@ -135,8 +135,9 @@ public class Player : MonoBehaviour
     {
         float time = 0;
         StartCoroutine(PlayerSpinAnimation(2));
+
         Vector3 startPosition = _playerGFX.transform.localPosition;
-        Vector3 endPosition = new Vector3(0, 0, 1.4f);
+        Vector3 endPosition = gameObject.transform.position;
 
         Vector3 startScale = _playerGFX.transform.localScale;
         Vector3 endScale = new Vector3(2, 4, 4);
