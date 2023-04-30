@@ -63,8 +63,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("StartGame");
-      //  SceneManager.LoadScene("SceneMenu");
+        SceneManager.LoadScene("MainScene");
     }
 
     

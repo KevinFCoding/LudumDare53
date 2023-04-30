@@ -13,6 +13,6 @@ public class Spawn : MonoBehaviour
 
     private void SpawnVirus(GameObject virus)
     {
-        Instantiate(_spawnablesVirus[0], gameObject.transform.position, Quaternion.identity);
+        Instantiate(virus, gameObject.transform.position, Quaternion.identity);
     }
 }
