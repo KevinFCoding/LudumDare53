@@ -17,8 +17,8 @@ public class SoundManager : MonoBehaviour
     }
     void Start()
     {
-        audioSource.clip = playlist[0];
-        audioSource.Play();
+       // audioSource.clip = playlist[0];
+       // audioSource.Play();
     }
 
     void Update()
