@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EndingManager : MonoBehaviour
 {
-    public SoundManager audioManager;
+    public SoundManager _soundManager;
     public AudioSource audioSource;
     public AudioClip winSound;
     public AudioClip looseSound;
@@ -45,6 +45,12 @@ public class EndingManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        _soundManager = GameObject.FindAnyObjectByType<SoundManager>();
+        audioSource = GameObject.FindAnyObjectByType<AudioSource>();
     }
 
     public void GetAllParticles()
@@ -179,7 +185,7 @@ public class EndingManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.6f);
         _victoryImage.SetActive(true);
-        audioManager.PlayClipAt(winSound, transform.position);
+        _soundManager.PlayClipAt(winSound, transform.position);
 
         yield return new WaitForSeconds(0.5f);
         _winParticules.SetActive(true);

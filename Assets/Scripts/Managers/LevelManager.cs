@@ -43,6 +43,6 @@ public class LevelManager: MonoBehaviour
 
     public void LoadGameOver()
     {
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("MainMenuScene");
     }
 }
