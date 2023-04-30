@@ -9,6 +9,8 @@ public class SettingsWindow : MonoBehaviour
     [SerializeField] GameObject _settingsWindow;
 
     public AudioMixer audioMixer;
+    public AudioSource audioSource;
+    public AudioClip honk;
     public Slider musicSlider;
     public Slider soundSlider;
     void Start()
@@ -31,6 +33,13 @@ public class SettingsWindow : MonoBehaviour
         _settingsWindow.SetActive(false);
     }
 
+    public void SetFullScreen(bool isFullScreen)
+    {
+
+        Screen.fullScreen = isFullScreen;
+
+    }
+
     public void SetVolumeMusic(float volume) 
     {
         audioMixer.SetFloat("music", volume);
@@ -38,6 +47,12 @@ public class SettingsWindow : MonoBehaviour
     public void SetVolumeSound(float soundVolume)
     {
         audioMixer.SetFloat("sound", soundVolume);
+
+    }
+
+    public void HonkFunction()
+    {
+        audioSource.PlayOneShot(honk);
 
     }
 }
