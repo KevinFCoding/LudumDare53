@@ -52,7 +52,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         StartCoroutine(PlayerForwardMovement());
-        GameStarted();
     }
 
     private void Update()
