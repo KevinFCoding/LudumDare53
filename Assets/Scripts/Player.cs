@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float _speed = 10;
     [SerializeField] bool _isInfected = false;
     [SerializeField] Material _playerMat;
-    [SerializeField] Material _infectedPlayerMat;
+    [SerializeField] GameObject _virusAroundPlayer;
 
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
@@ -28,7 +28,8 @@ public class Player : MonoBehaviour
         {
             Destroy(other.gameObject);
             _isInfected = true;
-            gameObject.GetComponent<MeshRenderer>().material = _infectedPlayerMat;
+            PlayerIsInfected(other.gameObject.GetComponent<Enemy>().getVirusName());
+            //gameObject.GetComponent<MeshRenderer>().material = _infectedPlayerMat;
         }
 
         if (other.gameObject.GetComponent<MailBox>())
@@ -93,6 +94,11 @@ public class Player : MonoBehaviour
     //        transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
     //    }
     //}
+
+    private void PlayerIsInfected(string virusName)
+    {
+        //if(virusName == "HVirus")
+    }
 
     IEnumerator PlayerForwardMovement()
     {
