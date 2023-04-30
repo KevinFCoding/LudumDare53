@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         _drawingManager = FindObjectOfType<DrawingManager>();
-        if(_gameIsPlaying)
+        if (_gameIsPlaying)
         {
             EndCanvasReset();
             SetUpLevel();
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         _mailboxes.Clear();
         MailBox[] tempTab = GameObject.FindObjectsOfType<MailBox>();
-        foreach(MailBox mailbox in tempTab)
+        foreach (MailBox mailbox in tempTab)
         {
             _mailboxes.Add(mailbox);
         }
@@ -122,13 +122,13 @@ public class GameManager : MonoBehaviour
         _spawners.Clear();
         GameObject gameObject = GameObject.Find("DeliveryThreads"); 
         DeliveryThread[] tempTab = gameObject.GetComponentsInChildren<DeliveryThread>();
-
+        _deliveryThreads = new();
         foreach (DeliveryThread dt in tempTab)
         {
             _deliveryThreads.Add(dt.gameObject);
             _spawners.Add(dt.gameObject.GetComponentInParent<Spawner>().gameObject);
         }
-            _drawingManager.SetThread(_deliveryThreads);
+        _drawingManager.SetThread(_deliveryThreads);
     }
      
     private void LaunchVlopAnimation()
