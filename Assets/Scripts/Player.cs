@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool _isInfected = false;
     [SerializeField] Material _playerMat;
     [SerializeField] GameObject _virusAroundPlayer;
+    [SerializeField] GameObject _playerGFX;
 
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         StartCoroutine(PlayerForwardMovement());
+        GameStarted();
     }
 
     private void Update()
@@ -83,6 +85,10 @@ public class Player : MonoBehaviour
         return _isInfected;
     }
 
+    public void GameStarted()
+    {
+        StartCoroutine(GFXGoBackAnimation());
+    }
     //private void CheckForPlayerInput()
     //{
     //    if(Input.GetKeyDown(KeyCode.D))
@@ -98,7 +104,54 @@ public class Player : MonoBehaviour
     private void PlayerIsInfected(string virusName)
     {
         //if(virusName == "HVirus")
+        //if(virusName == "LVirus")
+        //if(virusName == "SVirus")
+        //if(virusName == "AVirus")
     }
+
+    IEnumerator PlayerSpinAnimation(float timeOfSpin)
+    {
+        float time = 0;
+        Quaternion baseRotation = _playerGFX.transform.localRotation;
+        while (time < timeOfSpin)
+        {
+            time += Time.deltaTime;
+            _playerGFX.transform.Rotate(Vector3.forward * 300 * Time.deltaTime, Space.Self);
+            yield return null;
+        };
+        if (time >= timeOfSpin) {
+            float rotationTime = 0;
+            while(rotationTime < 1)
+            {
+                rotationTime += Time.deltaTime;
+                _playerGFX.transform.rotation = Quaternion.Lerp(_playerGFX.transform.localRotation, baseRotation, rotationTime / 1);
+                yield return null;
+            }
+        }
+    }
+
+    IEnumerator GFXGoBackAnimation()
+    {
+        float time = 0;
+        StartCoroutine(PlayerSpinAnimation(2));
+        Vector3 startPosition = _playerGFX.transform.localPosition;
+        Vector3 endPosition = new Vector3(0, 0, 1.4f);
+
+        Vector3 startScale = _playerGFX.transform.localScale;
+        Vector3 endScale = new Vector3(2, 4, 4);
+        while (time < 2)
+        {
+            time += Time.deltaTime;
+            _playerGFX.transform.localPosition = Vector3.Lerp(startPosition, endPosition, time / 2);
+            _playerGFX.transform.localScale = Vector3.Lerp(startScale, endScale, time / 2);
+            yield return null;
+        };
+        if(time > 2)
+        {
+            _speed = 5;
+        }
+    }
+
 
     IEnumerator PlayerForwardMovement()
     {
@@ -120,6 +173,7 @@ public class Player : MonoBehaviour
         Vector3 endPos = waypoints.startPoint.position;
         float distance = Vector3.Distance(startPos, endPos);
         float timeToReach = distance / _speed;
+        StartCoroutine(PlayerSpinAnimation(timeToReach));
         while (time < timeToReach)
         {
             time += Time.deltaTime;
