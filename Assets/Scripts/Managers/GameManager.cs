@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         //SetUpLevel();
         //SetUpThreadsAndSpawners();
         points = 0;
+        _soundManager = GameObject.FindAnyObjectByType<SoundManager>();
     }
 
     public void SceneHasChanged()
@@ -150,7 +151,7 @@ public class GameManager : MonoBehaviour
 
             checkCount++;
         }
-        _mailboxes[spam].MailBoxName(name);
+        _mailboxes[random].MailBoxName(name);
         Debug.Log(name + " placed at "+random);
     }
     #endregion
@@ -162,7 +163,8 @@ public class GameManager : MonoBehaviour
         _gameIsPlaying = true;
     }
 
-    public void PlayerHasDeliveredTheMail(string boxDelivered) { 
+    public void PlayerHasDeliveredTheMail(string boxDelivered) {
+        _player.StopPlayer();
         if(boxDelivered == "Spam")
         {
             if (_player.isPlayerInfected()) points += 2;

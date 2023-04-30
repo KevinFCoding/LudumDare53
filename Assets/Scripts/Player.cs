@@ -81,6 +81,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void StopPlayer()
+    {
+        _speed = 0;
+    }
+
     public bool isPlayerInfected()
     {
         return _isInfected;
@@ -136,7 +141,7 @@ public class Player : MonoBehaviour
         float time = 0;
         StartCoroutine(PlayerSpinAnimation(2));
 
-        Vector3 startPosition = _playerGFX.transform.localPosition;
+        Vector3 startPosition = _playerGFX.transform.position;
         Vector3 endPosition = gameObject.transform.position;
 
         Vector3 startScale = _playerGFX.transform.localScale;
