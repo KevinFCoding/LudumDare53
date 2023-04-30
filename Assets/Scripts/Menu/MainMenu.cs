@@ -76,7 +76,7 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator ActiveIcons()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0.2f);
         incons[0].SetActive(true);
         
 
