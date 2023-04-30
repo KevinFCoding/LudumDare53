@@ -25,9 +25,11 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Enemy>())
+        Enemy enemy = other.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
+            enemy.HasTouchedPlayer();
             _isInfected = true;
             PlayerIsInfected(other.gameObject.GetComponent<Enemy>().getVirusName());
             //gameObject.GetComponent<MeshRenderer>().material = _infectedPlayerMat;

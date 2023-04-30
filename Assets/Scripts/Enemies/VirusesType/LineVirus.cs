@@ -14,4 +14,10 @@ public class LineVirus : Spawnable
     {
         transform.Translate(-transform.forward * _speed * Time.deltaTime);
     }
+
+    public override void HasTouchedPlayer()
+    {
+        base.HasTouchedPlayer();
+        Destroy(gameObject);
+    }
 }

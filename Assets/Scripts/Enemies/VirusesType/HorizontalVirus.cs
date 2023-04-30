@@ -21,4 +21,10 @@ public class HorizontalVirus : Spawnable
 
         transform.Translate(forwardMovement + upMovement * _speed * Time.deltaTime);
     }
+
+    public override void HasTouchedPlayer()
+    {
+        base.HasTouchedPlayer();
+        Destroy(gameObject);
+    }
 }
