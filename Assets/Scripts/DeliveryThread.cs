@@ -21,11 +21,11 @@ public class DeliveryThread : MonoBehaviour
 
     private void OnMouseOver()
     {
-        Cursor.SetCursor(_hoverCursorTexture, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(_hoverCursorTexture, new Vector2(_hoverCursorTexture.width / 2, _hoverCursorTexture.height / 2), CursorMode.Auto);
     }
 
     private void OnMouseExit()
     {
-        Cursor.SetCursor(_baseCursorTexture, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(_baseCursorTexture, new Vector2(_baseCursorTexture.width / 2, 0), CursorMode.Auto);
     }
 }
