@@ -11,6 +11,9 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] GameObject _pauseMenuUI;
     [SerializeField] GameObject _settingsWindow;
+
+    [SerializeField] AudioSource audioMixer;
+    [SerializeField] AudioClip errorClip;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -28,6 +31,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Paused()
     {
+        audioMixer.PlayOneShot(errorClip);
         _pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;

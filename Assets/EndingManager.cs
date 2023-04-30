@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EndingManager : MonoBehaviour
 {
+    public SoundManager audioManager;
+    public AudioSource audioSource;
+    public AudioClip winSound;
+    public AudioClip looseSound;
+
     [Header("Victory")]
 
     [SerializeField] GameObject _winParticules;
@@ -18,9 +23,9 @@ public class EndingManager : MonoBehaviour
     [SerializeField] GameObject _looseImage;
     void Start()
     {
-        print("Start");
+       // print("Start");
         //  Win();
-        Loose();
+       // Loose();
     }
 
     void Update()
@@ -31,7 +36,6 @@ public class EndingManager : MonoBehaviour
     public void Loose()
     {
 
-        print("looseFunction");
 
         _loosePanel.SetActive(true);
         StartCoroutine(ActiveEndingLoosePanel());
@@ -46,12 +50,12 @@ public class EndingManager : MonoBehaviour
 
     IEnumerator ActiveEndingLoosePanel()
     {
-        print("looseCorouutine");
-
         yield return new WaitForSeconds(1.6f);
         _looseImage.SetActive(true);
-        print("looseImage");
+        audioSource.PlayOneShot(looseSound, 15);
+
         yield return new WaitForSeconds(0.5f);
+
         _looseParticules.SetActive(true);
 
         yield break;
@@ -61,6 +65,8 @@ public class EndingManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.6f);
         _victoryImage.SetActive(true);
+        audioManager.PlayClipAt(winSound, transform.position);
+
         yield return new WaitForSeconds(0.5f);
         _winParticules.SetActive(true);
 

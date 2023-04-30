@@ -11,17 +11,23 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject _startButton;
     [SerializeField] GameObject _quitButton;
     [SerializeField] GameObject _settingsWindow;
-
+    [SerializeField] GameObject _launchWindow;
+    [SerializeField] GameObject _menuContent;
+    [SerializeField] GameObject _credits;
 
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip errorSound;
+    public AudioClip windowsXpSound;
 
+    [SerializeField] GameObject[] incons;
+        
 
-    [SerializeField] Image _image;
     void Start()
     {
-        
+        audioSource.PlayOneShot(windowsXpSound);
+        Invoke("ShowMainMenu", 3f);
+
     }
 
     // Update is called once per frame
@@ -30,9 +36,29 @@ public class MainMenu : MonoBehaviour
         
     }
 
+    public void ShowMainMenu()
+    {
+        _launchWindow.SetActive(false);
+        print("Launch windows close");
+
+        StartCoroutine(ActiveIcons());
+
+    }
+
     public void QuitButton()
     {
         Application.Quit();
+    }
+    public void ShowCredits()
+    {
+        audioSource.PlayOneShot(errorSound);
+
+        _credits.SetActive(true);
+    }
+    public void HideCredits()
+    {
+        _credits.SetActive(false);
+
     }
 
     public void StartGame()
@@ -41,18 +67,53 @@ public class MainMenu : MonoBehaviour
       //  SceneManager.LoadScene("SceneMenu");
     }
 
-    public void OnPointerEnter()
-    {
-        _image.enabled = true;
-    }
-
-    public void OnPointerExit()
-    {
-        _image.enabled = false;
-    }
+    
     public void OpenSettingsWindows()
     {
-        _settingsWindow.SetActive(true);
         audioSource.PlayOneShot(errorSound);
+        _settingsWindow.SetActive(true);
+    }
+
+    IEnumerator ActiveIcons()
+    {
+        yield return new WaitForSeconds(5);
+        incons[0].SetActive(true);
+        
+
+        yield return new WaitForSeconds(0.2f);
+
+        incons[0].SetActive(false);
+
+        incons[2].SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+        incons[3].SetActive(true);
+
+        incons[2].SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        incons[3].SetActive(false);
+
+        incons[4].SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        incons[5].SetActive(true);
+
+        incons[4].SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        incons[6].SetActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+        incons[2].SetActive(false);
+        incons[2].SetActive(true);
+        incons[3].SetActive(true);
+        incons[6].SetActive(true);
+        incons[4].SetActive(true);
+        incons[1].SetActive(true);
+        incons[5].SetActive(true);
+        incons[7].SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        audioSource.PlayOneShot(errorSound);
+        _menuContent.SetActive(true);
+
+        yield break;
     }
 }
