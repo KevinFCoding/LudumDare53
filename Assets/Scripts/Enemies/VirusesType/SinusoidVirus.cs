@@ -8,6 +8,10 @@ public class SinusoidVirus : Spawnable
     [SerializeField] float _speed = 3;
     [SerializeField] float _frequency = 2;
     [SerializeField] float magnitude = .5f;
+    private void Start()
+    {
+        name = "SVirus";
+    }
 
     void Update()
     {

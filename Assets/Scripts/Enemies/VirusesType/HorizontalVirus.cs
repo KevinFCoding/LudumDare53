@@ -9,6 +9,10 @@ public class HorizontalVirus : Spawnable
     [SerializeField] float _frequency = 2;
     [SerializeField] float magnitude = .5f;
 
+    private void Start()
+    {
+        name = "HVirus";
+    }
     void Update()
     {
 

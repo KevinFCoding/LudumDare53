@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("Boxes and Set up")]
     [SerializeField] List<MailBox> _mailboxes;
     [SerializeField] List<GameObject> _deliveryThreads;
+    [SerializeField] List<GameObject> _spawners;
 
     [Header("Game Points and Rewards")]
     public int points = 0;
@@ -34,23 +35,19 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("KFScene"))
-        {
-            _drawingManager = FindObjectOfType<DrawingManager>();
-            SetUpLevel();
-            SetUpThreads();
-        }
+        //_drawingManager = FindObjectOfType<DrawingManager>();
+        //SetUpLevel();
+        //SetUpThreadsAndSpawners();
     }
 
     public void SceneHasChanged()
     {
         _player = FindObjectOfType<Player>();
         _drawingManager = FindObjectOfType<DrawingManager>();
-        _player.enabled = false;
         if(_gameIsPlaying)
         {
             SetUpLevel();
-            SetUpThreads();
+            SetUpThreadsAndSpawners();
             LaunchVlopAnimation();
         }
     }
@@ -86,7 +83,7 @@ public class GameManager : MonoBehaviour
             _mailboxes[lose].isLose();
         }
     }
-    private void SetUpThreads()
+    private void SetUpThreadsAndSpawners()
     {
         GameObject gameObject = GameObject.Find("DeliveryThreads"); 
         DeliveryThread[] tempTab = gameObject.GetComponentsInChildren<DeliveryThread>();
@@ -94,13 +91,14 @@ public class GameManager : MonoBehaviour
         foreach (DeliveryThread dt in tempTab)
         {
             _deliveryThreads.Add(dt.gameObject);
+            _spawners.Add(dt.gameObject.GetComponentInParent<Spawner>().gameObject);
         }
             _drawingManager.SetThread(_deliveryThreads);
     }
 
     private void LaunchVlopAnimation()
     {
-
+        _player.GameStarted();
     }
 
     #endregion
