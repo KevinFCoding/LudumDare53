@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 
             if (fwp != null)
             {
-                if (fwp.gameObject.transform.position.x == transform.position.x)
+                if (fwp.gameObject.transform.position.x == transform.position.x && fwp.gameObject.transform.position.z >= transform.position.z)
                 {
                     WayPoints wps = fwp.GetPoints();
                     if (wps == null)
