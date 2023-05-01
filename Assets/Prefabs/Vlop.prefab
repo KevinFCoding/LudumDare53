@@ -549,6 +549,11 @@ MonoBehaviour:
   _playerMat: {fileID: 2100000, guid: 4502eb943a2e49b4d8f51739255ebfe5, type: 2}
   _virusAroundPlayer: {fileID: 1125541214173666897}
   _playerGFX: {fileID: 5725443994036999885}
+  _speedStrafe: 5
+  _strafeFrequency: 2
+  _strafeMagnitude: 0.1
+  _frequency: 1
+  magnitude: 0.2
 --- !u!54 &878891638
 Rigidbody:
   m_ObjectHideFlags: 0

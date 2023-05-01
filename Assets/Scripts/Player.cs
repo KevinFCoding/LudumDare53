@@ -12,7 +12,16 @@ public class Player : MonoBehaviour
     [SerializeField] Material _playerMat;
     [SerializeField] GameObject _virusAroundPlayer;
     [SerializeField] GameObject _playerGFX;
-    [SerializeField] SoundManager _soundManager;
+
+    [Header("GFX STRAFE")]
+    [SerializeField] float _speedStrafe = 10f;
+    [SerializeField] float _strafeFrequency;
+    [SerializeField] float _strafeMagnitude;
+
+    [Header("GFX SCALE")]
+    [SerializeField] float _frequency = 1;
+    [SerializeField] float  magnitude = .2f;
+
 
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
@@ -102,6 +111,23 @@ public class Player : MonoBehaviour
     {
         _virusAroundPlayer.SetActive(true);
     }
+    IEnumerator PlayerHoverAnimation()
+    {
+
+        Vector3 baseLocalScale = _playerGFX.transform.localScale; 
+        while (true)
+        {
+
+            // Change Scale for Breathing Effect
+            _playerGFX.transform.localScale = _playerGFX.transform.localScale * Mathf.Sin(Time.time * _frequency) * magnitude + baseLocalScale;
+            
+            // Strafe tot give Movement
+            Vector3 upAndDownMovement = Mathf.Cos(Time.time * _strafeFrequency) * _strafeMagnitude * transform.right;
+            _playerGFX.transform.Translate(upAndDownMovement * _speedStrafe * Time.deltaTime);
+
+            yield return null;
+        }
+    }
 
     IEnumerator PlayerSpinAnimation(float timeOfSpin)
     {
@@ -127,7 +153,7 @@ public class Player : MonoBehaviour
     IEnumerator GFXGoBackAnimation()
     {
         float time = 0;
-        StartCoroutine(PlayerSpinAnimation(2));
+        StartCoroutine(PlayerSpinAnimation(1.5f));
 
         Vector3 startPosition = _playerGFX.transform.position;
         Vector3 endPosition = gameObject.transform.position;
@@ -144,6 +170,7 @@ public class Player : MonoBehaviour
         if(time > 2)
         {
             _speed = 5;
+            StartCoroutine(PlayerHoverAnimation());
         }
     }
 
@@ -168,7 +195,6 @@ public class Player : MonoBehaviour
         Vector3 endPos = waypoints.startPoint.position;
         float distance = Vector3.Distance(startPos, endPos);
         float timeToReach = distance / _speed;
-        StartCoroutine(PlayerSpinAnimation(timeToReach));
         while (time < timeToReach)
         {
             time += Time.deltaTime;
