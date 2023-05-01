@@ -10,6 +10,7 @@ public class PauseMenuManager : MonoBehaviour
     public static bool isPaused;
 
     [Header("Manager")]
+    [SerializeField] GameManager _gameManager;
     [SerializeField] DrawingManager _drawingManager;
 
     [SerializeField] GameObject _pauseMenuUI;
@@ -33,15 +34,20 @@ public class PauseMenuManager : MonoBehaviour
   
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (_gameManager.gameIsPlaying)
         {
-            if (isPaused)
+
+       
+             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Resume();
-            }
-            else
-            {
-                Paused();
+                if (isPaused)
+                {
+                    Resume();
+                }
+                 else
+                {
+                   Paused();
+                }
             }
         }
     }

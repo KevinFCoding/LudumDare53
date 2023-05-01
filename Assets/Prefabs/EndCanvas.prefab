@@ -2450,10 +2450,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundManager: {fileID: 0}
   audioSource: {fileID: 0}
-  winSound: {fileID: 8300000, guid: e6049133aa43ca149bf352e21d339926, type: 3}
+  winSound: {fileID: 8300000, guid: 650003cb1d650dc4795d1f9a5f6957a3, type: 3}
   looseSound: {fileID: 8300000, guid: abb2bcb458549cc45b406d968301f90e, type: 3}
-  looseGPSound: {fileID: 8300000, guid: 92264902ad3f13748b90fd1d78526fb4, type: 3}
-  youGotMail: {fileID: 8300000, guid: 2e7af42beb705d84a9f9200b1be36265, type: 3}
+  looseGPSound: {fileID: 8300000, guid: a8842c5a3098998469596bc8e71a2392, type: 3}
+  youGotMail: {fileID: 8300000, guid: 90b7dc2cbb43cf0459cd981bb5640bce, type: 3}
   looseBrotherSound: {fileID: 8300000, guid: 92264902ad3f13748b90fd1d78526fb4, type: 3}
   stampSound: {fileID: 8300000, guid: 1eb1ceb079997c247aeec661e7a60ae7, type: 3}
   _spamParticules: {fileID: 0}
