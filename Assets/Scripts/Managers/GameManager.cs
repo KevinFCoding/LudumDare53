@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] SoundManager _soundManager;
     [SerializeField] DrawingManager _drawingManager;
     [SerializeField] EndingManager _endingManager;
+    [SerializeField] PauseMenuManager _pauseManager;
 
     [SerializeField] Player _player;
 
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour
             SetUpLevel();
             SetUpThreadsAndSpawners();
             LaunchVlopAnimation();
+            _pauseManager.SetDrawingManager();
         }
     }
     #region New Scene Set upping

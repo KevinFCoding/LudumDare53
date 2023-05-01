@@ -52,6 +52,11 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
+    public void SetDrawingManager()
+    {
+        _drawingManager = GameObject.FindObjectOfType<DrawingManager>();
+    }
+
     public void Paused()
     {
         _drawingManager.GamePaused(true);
