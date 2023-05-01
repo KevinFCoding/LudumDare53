@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class KillAllDontDestroyOnLoad : MonoBehaviour
 {
+    [SerializeField] GameObject dontdestroy;
     private void Start()
     {
         DestroyAllDontDestroyOnLoadObjects();

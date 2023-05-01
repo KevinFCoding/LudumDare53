@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DDOLDestroyer : MonoBehaviour
 {
+    [SerializeField] GameObject dontdestroy;
     private void Start()
     {
         DestroyAllDontDestroyOnLoadObjects();
@@ -16,6 +17,6 @@ public class DDOLDestroyer : MonoBehaviour
         DontDestroyOnLoad(go);
 
         foreach (var root in go.scene.GetRootGameObjects())
-            if(root.gameObject.name != "AudioManager") Destroy(root);
+            if(root.gameObject != dontdestroy) Destroy(root);
     }
 }
