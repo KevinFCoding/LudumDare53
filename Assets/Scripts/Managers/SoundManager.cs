@@ -16,16 +16,6 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
     }
-    void Start()
-    {
-       // audioSource.clip = playlist[0];
-       // audioSource.Play();
-    }
-
-    void Update()
-    {
-        
-    }
 
     public AudioSource PlayClipAt(AudioClip clip, Vector3 pos)
     {

@@ -20,7 +20,6 @@ public class MailBox : MonoBehaviour
     }
     public void MailBoxName(string nameBox)
     {
-        Debug.Log("MAIL BOX NAME CALLED " + nameBox);
         _nameBox = nameBox;
         for (int i = 0; i < _mailBoxGFX.transform.childCount; i++)
         {

@@ -140,15 +140,12 @@ public class GameManager : MonoBehaviour
     private void PlaceBox(string name)
     {
         UnityEngine.Random.InitState(System.DateTime.Now.Millisecond);
-
         int random = UnityEngine.Random.Range(0, _mailboxes.Count);
         int checkCount = 0;
-        Debug.Log("Randdom Id pour : " + name + " : " + random);
         while (checkCount < _mailboxes.Count  &&  (_mailboxes[random].nameBox != null || !String.IsNullOrEmpty(_mailboxes[random].nameBox)))
         {
             Debug.Log("Emplacement pris pour l'id : " + random + " : " + _mailboxes[random].nameBox);
             random = UnityEngine.Random.Range(0, _mailboxes.Count);
-
             checkCount++;
         }
         _mailboxes[random].MailBoxName(name);
