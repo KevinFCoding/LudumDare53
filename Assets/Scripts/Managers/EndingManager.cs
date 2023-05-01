@@ -30,6 +30,10 @@ public class EndingManager : MonoBehaviour
     [SerializeField] GameObject _loosePanel;
     [SerializeField] GameObject _looseImage;
 
+    [Header("Infected")]
+
+    [SerializeField] GameObject _infectedPanel;
+
     [Header("GrampaDefeat")]
 
     [SerializeField] GameObject _looseGPParticules;
@@ -96,7 +100,7 @@ public class EndingManager : MonoBehaviour
     {
         audioSource.PlayOneShot(youGotMail, 5);
 
-        _loosePanel.SetActive(true);
+        _infectedPanel.SetActive(true);
         StartCoroutine(ActiveEndingLoosePanel());
     }
 
@@ -131,6 +135,12 @@ public class EndingManager : MonoBehaviour
         StartCoroutine(ActiveSpamPanel());
     }
 
+    public void Infected()
+    {
+        StartCoroutine(ActiveSpamPanel());
+
+    }
+
 
     IEnumerator ActiveSpamPanel()
     {
@@ -141,6 +151,17 @@ public class EndingManager : MonoBehaviour
         audioSource.PlayOneShot(stampSound, 2);
         yield return new WaitForSeconds(0.5f);
         _spamParticules.SetActive(true);
+
+        yield break;
+    }
+    IEnumerator ActiveInfectedPanel()
+    {
+        _infectedPanel.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+        audioSource.PlayOneShot(looseSound, 2);
+        yield return new WaitForSeconds(0.5f);
+        _looseParticules.SetActive(true);
 
         yield break;
     }
