@@ -17,6 +17,12 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    public void StartAudio()
+    {
+        audioSource.clip = playlist[0];
+        audioSource.Play();
+    }
+
     public AudioSource PlayClipAt(AudioClip clip, Vector3 pos)
     {
         GameObject tempGO = new GameObject("TempAudio");

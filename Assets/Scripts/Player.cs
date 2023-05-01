@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] Material _playerMat;
     [SerializeField] GameObject _virusAroundPlayer;
     [SerializeField] GameObject _playerGFX;
+    [SerializeField] SoundManager _soundManager;
 
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
