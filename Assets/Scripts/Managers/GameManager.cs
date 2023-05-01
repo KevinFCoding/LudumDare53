@@ -9,8 +9,18 @@ using Random = Unity.Mathematics.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
 
-    [SerializeField] Text _scoreText;
+    public int CurrentLevelNumber { get; private set; }
+
+    public event EventHandler<OnScroreGainedEventArgs> OnScoreGained;
+    public event EventHandler OnNextLevel;
+
+    public class OnScroreGainedEventArgs : EventArgs
+    {
+        public int scoreGained;
+        public int totalScore;
+    }
 
     [Header("Managers")]
     [SerializeField] LevelManager _levelManager;
@@ -29,20 +39,21 @@ public class GameManager : MonoBehaviour
     public int points = 0;
     public bool perfectDelivery = true;
 
-    private string[] defeatTableName = {"Dad", "Granny", "Bro" };
+    private string[] defeatTableName = { "Dad", "Granny", "Bro" };
     public bool gameIsPlaying = false;
 
     private bool _isMusicStarted = false;
 
     private void Awake()
     {
+        Instance = this;
         DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
         points = 0;
-        _scoreText.text = points.ToString();
+        CurrentLevelNumber = 1;
         _soundManager = GameObject.FindAnyObjectByType<SoundManager>();
     }
 
@@ -96,10 +107,10 @@ public class GameManager : MonoBehaviour
             PlaceBox("Win");
             PlaceBox("Spam");
 
-            
+
             for (int i = 0; i < _mailBoxes.Count - 2; i++)
             {
-                if(i < defeatTableName.Length)
+                if (i < defeatTableName.Length)
                 {
                     PlaceBox(defeatTableName[i]);
                 }
@@ -110,7 +121,7 @@ public class GameManager : MonoBehaviour
     {
         _deliveryThreads.Clear();
         _spawners.Clear();
-        GameObject gameObject = GameObject.Find("DeliveryThreads"); 
+        GameObject gameObject = GameObject.Find("DeliveryThreads");
         DeliveryThread[] tempTab = gameObject.GetComponentsInChildren<DeliveryThread>();
         _deliveryThreads = new();
         foreach (DeliveryThread dt in tempTab)
@@ -132,7 +143,7 @@ public class GameManager : MonoBehaviour
     }
     private void LaunchVlopAnimation()
     {
-        if(!_isMusicStarted)
+        if (!_isMusicStarted)
         {
             _soundManager.StartAudio();
             _isMusicStarted = true;
@@ -147,12 +158,12 @@ public class GameManager : MonoBehaviour
             PlaceBox(name);
             return;
         }
-        if(_mailBoxes[random].nameBox == "" || _mailBoxes[random].nameBox == null)
+        if (_mailBoxes[random].nameBox == "" || _mailBoxes[random].nameBox == null)
         {
             _mailBoxes[random].MailBoxName(name);
-                
-            if(name == "Win")
-            _player.SetCurrentWinThread(_mailBoxes[random].gameObject);
+
+            if (name == "Win")
+                _player.SetCurrentWinThread(_mailBoxes[random].gameObject);
             if (name == "Spam")
                 _player.SetCurrentSpamThread(_mailBoxes[random].gameObject);
         }
@@ -166,20 +177,35 @@ public class GameManager : MonoBehaviour
         gameIsPlaying = true;
     }
 
-    public void PlayerHasDeliveredTheMail(string boxDelivered) {
+    public void PlayerHasDeliveredTheMail(string boxDelivered)
+    {
         _player.StopPlayer();
-        if(boxDelivered == "Spam")
+        if (boxDelivered == "Spam")
         {
-            if (_player.isPlayerInfected()) points += 100;
+            if (_player.isPlayerInfected())
+            {
+                int scoreGained = Mathf.Clamp(100 - _player.GetNumberOfInfections() * 30, 0, 100);
+                points += scoreGained;
+                OnScoreGained?.Invoke(this, new OnScroreGainedEventArgs { scoreGained = scoreGained, totalScore = points });
+            }
+
             perfectDelivery = false;
             _endingManager.Spam();
         }
         else if (boxDelivered == "Win")
         {
-            points += 200;
-            if (_player.isPlayerInfected()) _endingManager.Infected();
-            else _endingManager.Win();
-        } else if (boxDelivered == "Dad")
+            if (_player.isPlayerInfected())
+            {
+                _endingManager.Infected();
+            }
+            else
+            {
+                points += 200;
+                OnScoreGained?.Invoke(this, new OnScroreGainedEventArgs { scoreGained = 200, totalScore = points });
+                _endingManager.Win();
+            }
+        }
+        else if (boxDelivered == "Dad")
         {
             perfectDelivery = false;
             _endingManager.LooseGrampa();
@@ -194,14 +220,20 @@ public class GameManager : MonoBehaviour
             perfectDelivery = false;
             _endingManager.LooseBrother();
         }
-        _scoreText.text = points.ToString();
     }
 
     public void LevelOver()
     {
-        if (SceneManager.GetActiveScene().name == "Level13") GameOver();
-        else _levelManager.LoadNextLevel();
-
+        if (SceneManager.GetActiveScene().name == "Level13")
+        {
+            GameOver();
+        }
+        else
+        {
+            CurrentLevelNumber++;
+            OnNextLevel?.Invoke(this, EventArgs.Empty);
+            _levelManager.LoadNextLevel();
+        }
     }
 
     public void GameOver()
