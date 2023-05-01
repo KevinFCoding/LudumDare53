@@ -12,7 +12,8 @@ public class Player : MonoBehaviour
     [SerializeField] Material _playerMat;
     [SerializeField] GameObject _virusAroundPlayer;
     [SerializeField] GameObject _playerGFX;
-    [SerializeField] SoundManager _soundManager;
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip damageSound;
 
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        _audioSource = GameObject.FindAnyObjectByType<SoundManager>().GetComponentInChildren<AudioSource>();
         _nextWaypoint = new();
     }
 
@@ -90,6 +92,7 @@ public class Player : MonoBehaviour
 
     public bool isPlayerInfected()
     {
+
         return _isInfected;
     }
 
@@ -100,7 +103,10 @@ public class Player : MonoBehaviour
 
     private void PlayerIsInfected()
     {
+        _audioSource.PlayOneShot(damageSound, 5f);
+
         _virusAroundPlayer.SetActive(true);
+
     }
 
     IEnumerator PlayerSpinAnimation(float timeOfSpin)

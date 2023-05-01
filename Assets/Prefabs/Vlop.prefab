@@ -549,6 +549,8 @@ MonoBehaviour:
   _playerMat: {fileID: 2100000, guid: 4502eb943a2e49b4d8f51739255ebfe5, type: 2}
   _virusAroundPlayer: {fileID: 1125541214173666897}
   _playerGFX: {fileID: 5725443994036999885}
+  _soundManager: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: b98b8017106514f44981d94cca53b8b7, type: 3}
 --- !u!54 &878891638
 Rigidbody:
   m_ObjectHideFlags: 0
