@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject _launchWindow;
     [SerializeField] GameObject _menuContent;
     [SerializeField] GameObject _credits;
+    [SerializeField] GameObject _bestGame;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -66,6 +67,8 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("StartGameScene");
     }
 
+
+
     
     public void OpenSettingsWindows()
     {
@@ -114,5 +117,16 @@ public class MainMenu : MonoBehaviour
         _menuContent.SetActive(true);
 
         yield break;
+    }
+
+    public void OpenTheBestFeature()
+    {
+        _bestGame.SetActive(true);
+    }
+
+    public void CloseTheBestFeature()
+    {
+        _bestGame.SetActive(false);
+
     }
 }

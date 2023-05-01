@@ -11,6 +11,10 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] GameObject _pauseMenuUI;
     [SerializeField] GameObject _settingsWindow;
+    [SerializeField] GameObject _selfi;
+    [SerializeField] GameObject _videoTuto;
+
+    [SerializeField] SettingsWindow _settingsWindows;
 
     [SerializeField] AudioSource audioMixer;
     [SerializeField] AudioClip errorClip;
@@ -43,6 +47,8 @@ public class PauseMenu : MonoBehaviour
         _pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        CloseTuto();
+        _settingsWindows.CloseSettingsMenu();
 
     }
 
@@ -54,5 +60,17 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene("SceneMenu");
+    }
+
+    public void CloseTuto()
+    {
+        _videoTuto.SetActive(false);
+        _selfi.SetActive(false);
+    }
+
+    public void OpenTuto()
+    {
+        _selfi.SetActive(true);
+        _videoTuto.SetActive(true);
     }
 }
