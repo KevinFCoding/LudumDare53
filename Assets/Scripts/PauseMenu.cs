@@ -18,6 +18,8 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] AudioSource audioMixer;
     [SerializeField] AudioClip errorClip;
+    
+  
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -70,6 +72,7 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainScene");
     }
 
