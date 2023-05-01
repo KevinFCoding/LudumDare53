@@ -5,20 +5,31 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenuManager : MonoBehaviour
 {
     public static bool isPaused;
 
+    [Header("Manager")]
+    [SerializeField] DrawingManager _drawingManager;
+
     [SerializeField] GameObject _pauseMenuUI;
-    [SerializeField] GameObject _settingsWindow;
     [SerializeField] GameObject _selfi;
     [SerializeField] GameObject _videoTuto;
 
     [SerializeField] SettingsWindow _settingsWindows;
-
-    [SerializeField] AudioSource audioMixer;
     [SerializeField] AudioClip errorClip;
-    
+
+    private AudioSource _audioSource;
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        _audioSource = GameObject.FindAnyObjectByType<AudioSource>();
+
+    }
   
     void Update()
     {
@@ -33,22 +44,12 @@ public class PauseMenu : MonoBehaviour
                 Paused();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (isPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Paused();
-            }
-        }
     }
 
     public void Paused()
     {
-        audioMixer.PlayOneShot(errorClip);
+        _drawingManager.GamePaused(true);
+        _audioSource.PlayOneShot(errorClip);
         _pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
@@ -57,6 +58,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        _drawingManager.GamePaused(false);
         _pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
@@ -67,11 +69,13 @@ public class PauseMenu : MonoBehaviour
 
     public void SettingsWindow()
     {
-        _settingsWindow.SetActive(true);
+        Debug.Log("SettingsWindow PRESSED");
+        _settingsWindows.gameObject.SetActive(true);
     }
 
     public void MainMenu()
     {
+        Debug.Log("MainMenu PRESSED");
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainScene");
     }
@@ -84,6 +88,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenTuto()
     {
+        Debug.Log("OpenTuto PRESSED");
         _selfi.SetActive(true);
         _videoTuto.SetActive(true);
     }
