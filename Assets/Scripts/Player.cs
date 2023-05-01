@@ -111,20 +111,16 @@ public class Player : MonoBehaviour
 
         if (girlFriendCursor.activeSelf)
         {
-if (currentWinThread != null && !_isInfected)
-        {
-            girlFriendCursor.transform.LookAt(currentWinThread.transform.position);
+            if (currentWinThread != null && !_isInfected)
+            {
+                girlFriendCursor.transform.LookAt(currentWinThread.transform.position);
+            }
+
+            if (currentSpamThread != null && _isInfected)
+            {
+                girlFriendCursor.transform.LookAt(currentSpamThread.transform.position);
+            }
         }
-
-        if (currentSpamThread != null && _isInfected)
-        {
-            girlFriendCursor.transform.LookAt(currentSpamThread.transform.position);
-        }
-        }
-
-        
-
-
     }
 
     public void StopPlayer()
@@ -190,7 +186,7 @@ if (currentWinThread != null && !_isInfected)
         while (time < timeOfSpin)
         {
             time += Time.deltaTime;
-            _playerGFX.transform.Rotate(Vector3.forward * 300 * Time.deltaTime, Space.Self);
+            _playerGFX.transform.Rotate(Vector3.forward * 250 * Time.deltaTime, Space.Self);
             yield return null;
         };
         if (time >= timeOfSpin) {
