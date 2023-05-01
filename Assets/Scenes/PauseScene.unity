@@ -688,6 +688,7 @@ MonoBehaviour:
   _levelManager: {fileID: 349727223}
   _soundManager: {fileID: 1393159522}
   _drawingManager: {fileID: 0}
+  _endingManager: {fileID: 0}
   _player: {fileID: 878891639}
   _mailboxes: []
   _deliveryThreads: []
@@ -1201,10 +1202,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1347847657}
     m_Modifications:
-    - target: {fileID: 568983066, guid: 1f1f6eaff64d8be4b9afc668e7dbdd11, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 739173924, guid: 1f1f6eaff64d8be4b9afc668e7dbdd11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1313,10 +1310,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 4170966190197482535, guid: 1f1f6eaff64d8be4b9afc668e7dbdd11, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8834281203516762087, guid: 1f1f6eaff64d8be4b9afc668e7dbdd11, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1330,6 +1323,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1484842822, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1633094364254589573, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2790799762897661601, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474467455804961821, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7473383515736146264, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1397,6 +1406,10 @@ PrefabInstance:
     - target: {fileID: 7473383515736146271, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8380984494444556535, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
