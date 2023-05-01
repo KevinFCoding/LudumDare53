@@ -168,10 +168,6 @@ public class DrawingManager : MonoBehaviour
     {
         int threadOneIndex = threads.FindIndex(t => t.transform.position == threadStartPointPosition);
         int threadTwoIndex = threads.FindIndex(t => t.transform.position == threadEndPointPosition);
-
-        Debug.Log("OSITION THREAT POIN?TS m  " + threadOneIndex + " " + threadTwoIndex);
-        Debug.Log("OSITION THREAT POIN?TS INDEX  " + threadOneIndex + " " + threadTwoIndex);
-
         if ((threadOneIndex + 1 == threadTwoIndex) || (threadOneIndex - 1 == threadTwoIndex))
         {
             return true;
