@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Random = Unity.Mathematics.Random;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] Text _scoreText;
+
     [Header("Managers")]
     [SerializeField] LevelManager _levelManager;
     [SerializeField] SoundManager _soundManager;
@@ -44,6 +48,8 @@ public class GameManager : MonoBehaviour
         //SetUpLevel();
         //SetUpThreadsAndSpawners();
         points = 0;
+        _scoreText.text = points.ToString();
+
         _soundManager = GameObject.FindAnyObjectByType<SoundManager>();
     }
 
@@ -143,6 +149,7 @@ public class GameManager : MonoBehaviour
     }
     private void LaunchVlopAnimation()
     {
+        _soundManager.StartAudio();
         _player.GameStarted();
     }
 
@@ -172,13 +179,13 @@ public class GameManager : MonoBehaviour
         _player.StopPlayer();
         if(boxDelivered == "Spam")
         {
-            if (_player.isPlayerInfected()) points += 2;
+            if (_player.isPlayerInfected()) points += 100;
             perfectDelivery = false;
             _endingManager.Spam();
         }
         else if (boxDelivered == "Win")
         {
-            points += 4;
+            points += 200;
             if (_player.isPlayerInfected()) _endingManager.Infected();
             else _endingManager.Win();
         } else if (boxDelivered == "Dad")
@@ -196,6 +203,7 @@ public class GameManager : MonoBehaviour
             perfectDelivery = false;
             _endingManager.LooseBrother();
         }
+        _scoreText.text = points.ToString();
     }
 
     public void LevelOver()
