@@ -13,6 +13,7 @@ public class GameCanvasManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] AudioClip _photo;
     [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _stampSound;
 
     private void Start()
     {
@@ -30,6 +31,12 @@ public class GameCanvasManager : MonoBehaviour
     {
         StartGame();
     }
+
+    public void PlayStampSound()
+    {
+        _audioSource.PlayOneShot(_stampSound);
+    }
+
     private void StartGame()
     {
         StartCoroutine(FadeInPlayerFadeOutCanvas());

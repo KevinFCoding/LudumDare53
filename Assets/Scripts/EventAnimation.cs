@@ -9,4 +9,9 @@ public class EventAnimation : MonoBehaviour
     {
         _gameCanvasManager.AnimationOver();
     }
+
+    public void EventStamp()
+    {
+        _gameCanvasManager.PlayStampSound();
+    }
 }
