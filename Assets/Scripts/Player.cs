@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float _speed = 10;
     [SerializeField] bool _isInfected = false;
+    private int _numberOfInfections = 0;
     [SerializeField] Material _playerMat;
     [SerializeField] GameObject _virusAroundPlayer;
     [SerializeField] GameObject _playerGFX;
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour
 
     [Header("GFX SCALE")]
     [SerializeField] float _frequency = 1;
-    [SerializeField] float  magnitude = .2f;
+    [SerializeField] float magnitude = .2f;
 
 
     private bool _isPlayerOnWayPoint = false;
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
             //Destroy(other.gameObject);
             enemy.HasTouchedPlayer();
             _isInfected = true;
+            _numberOfInfections++;
             PlayerIsInfected();
             //PlayerIsInfected(other.gameObject.GetComponent<Enemy>().getVirusName());
             //gameObject.GetComponent<MeshRenderer>().material = _infectedPlayerMat;
@@ -102,6 +104,11 @@ public class Player : MonoBehaviour
         return _isInfected;
     }
 
+    public int GetNumberOfInfections()
+    {
+        return _numberOfInfections;
+    }
+
     public void GameStarted()
     {
         StartCoroutine(GFXGoBackAnimation());
@@ -114,13 +121,13 @@ public class Player : MonoBehaviour
     IEnumerator PlayerHoverAnimation()
     {
 
-        Vector3 baseLocalScale = _playerGFX.transform.localScale; 
+        Vector3 baseLocalScale = _playerGFX.transform.localScale;
         while (true)
         {
 
             // Change Scale for Breathing Effect
             _playerGFX.transform.localScale = _playerGFX.transform.localScale * Mathf.Sin(Time.time * _frequency) * magnitude + baseLocalScale;
-            
+
             // Strafe tot give Movement
             Vector3 upAndDownMovement = Mathf.Cos(Time.time * _strafeFrequency) * _strafeMagnitude * transform.right;
             _playerGFX.transform.Translate(upAndDownMovement * _speedStrafe * Time.deltaTime);
@@ -139,9 +146,10 @@ public class Player : MonoBehaviour
             _playerGFX.transform.Rotate(Vector3.forward * 300 * Time.deltaTime, Space.Self);
             yield return null;
         };
-        if (time >= timeOfSpin) {
+        if (time >= timeOfSpin)
+        {
             float rotationTime = 0;
-            while(rotationTime < 1)
+            while (rotationTime < 1)
             {
                 rotationTime += Time.deltaTime;
                 _playerGFX.transform.rotation = Quaternion.Lerp(_playerGFX.transform.localRotation, baseRotation, rotationTime / 1);
@@ -167,7 +175,7 @@ public class Player : MonoBehaviour
             _playerGFX.transform.localScale = Vector3.Lerp(startScale, endScale, time / 2);
             yield return null;
         };
-        if(time > 2)
+        if (time > 2)
         {
             _speed = 5;
             StartCoroutine(PlayerHoverAnimation());
