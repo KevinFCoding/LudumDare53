@@ -22,6 +22,14 @@ public class Player : MonoBehaviour
     [SerializeField] float _frequency = 1;
     [SerializeField] float  magnitude = .2f;
 
+    [Header("TARGET INDICATOR")]
+    [SerializeField] GameObject currentWinThread;
+    [SerializeField] GameObject currentSpamThread;
+
+    [SerializeField] SpriteRenderer targetSprite;
+    [SerializeField] Sprite[] targetSprites;
+
+    [SerializeField] GameObject girlFriendCursor;
 
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
@@ -64,6 +72,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         StartCoroutine(PlayerForwardMovement());
+        girlFriendCursor.SetActive(false);
+        targetSprite.sprite = targetSprites[0];
     }
 
     private void Update()
@@ -91,11 +101,27 @@ public class Player : MonoBehaviour
             }
 
         }
+
+        if (girlFriendCursor.activeSelf)
+        {
+if (currentWinThread != null && !_isInfected)
+        {
+            girlFriendCursor.transform.LookAt(currentWinThread.transform.position);
+        }
+
+        if (currentSpamThread != null && _isInfected)
+        {
+            girlFriendCursor.transform.LookAt(currentSpamThread.transform.position);
+        }
+        }
+
+        
     }
 
     public void StopPlayer()
     {
         _speed = 0;
+        girlFriendCursor.SetActive(false);
     }
 
     public bool isPlayerInfected()
@@ -108,9 +134,20 @@ public class Player : MonoBehaviour
         StartCoroutine(GFXGoBackAnimation());
     }
 
+    public void SetCurrentWinThread(GameObject winThread)
+    {
+        currentWinThread = winThread;
+    }
+
+    public void SetCurrentSpamThread(GameObject spamThread)
+    {
+        currentSpamThread = spamThread;
+    }
+
     private void PlayerIsInfected()
     {
         _virusAroundPlayer.SetActive(true);
+        targetSprite.sprite = targetSprites[1];
     }
     IEnumerator PlayerHoverAnimation()
     {
@@ -160,7 +197,7 @@ public class Player : MonoBehaviour
         Vector3 endPosition = gameObject.transform.position;
 
         Vector3 startScale = _playerGFX.transform.localScale;
-        Vector3 endScale = new Vector3(2, 4, 4);
+        Vector3 endScale = new Vector3(4, 4, 4);
         while (time < 2)
         {
             time += Time.deltaTime;
@@ -171,6 +208,7 @@ public class Player : MonoBehaviour
         if(time > 2)
         {
             _speed = 5;
+            girlFriendCursor.SetActive(true);
             StartCoroutine(PlayerHoverAnimation());
         }
     }

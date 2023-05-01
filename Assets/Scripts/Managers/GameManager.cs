@@ -61,6 +61,9 @@ public class GameManager : MonoBehaviour
     #region New Scene Set upping
     private void SetUpLevel()
     {
+        _player.SetCurrentWinThread(null);
+        _player.SetCurrentSpamThread(null);
+
         _mailBoxes.Clear();
         MailBox[] tempTab = GameObject.FindObjectsOfType<MailBox>();
         foreach (MailBox mailbox in tempTab)
@@ -93,9 +96,13 @@ public class GameManager : MonoBehaviour
             PlaceBox("Win");
             PlaceBox("Spam");
 
+            
             for (int i = 0; i < _mailBoxes.Count - 2; i++)
             {
-                PlaceBox(defeatTableName[i]);
+                if(i < defeatTableName.Length)
+                {
+                    PlaceBox(defeatTableName[i]);
+                }
             }
         }
     }
@@ -132,7 +139,6 @@ public class GameManager : MonoBehaviour
         }
         _player.GameStarted();
     }
-
     private void PlaceBox(string name)
     {
         int random = UnityEngine.Random.Range(0, _mailBoxes.Count);
@@ -144,6 +150,11 @@ public class GameManager : MonoBehaviour
         if(_mailBoxes[random].nameBox == "" || _mailBoxes[random].nameBox == null)
         {
             _mailBoxes[random].MailBoxName(name);
+                
+            if(name == "Win")
+            _player.SetCurrentWinThread(_mailBoxes[random].gameObject);
+            if (name == "Spam")
+                _player.SetCurrentSpamThread(_mailBoxes[random].gameObject);
         }
     }
     #endregion
