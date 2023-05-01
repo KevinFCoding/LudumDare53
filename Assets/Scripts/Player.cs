@@ -22,9 +22,12 @@ public class Player : MonoBehaviour
     [SerializeField] float _frequency = 1;
     [SerializeField] float  magnitude = .2f;
 
-
+    [Header("TARGET INDICATOR")]
     [SerializeField] GameObject currentWinThread;
     [SerializeField] GameObject currentSpamThread;
+
+    [SerializeField] SpriteRenderer targetSprite;
+    [SerializeField] Sprite[] targetSprites;
 
     [SerializeField] GameObject girlFriendCursor;
 
@@ -69,6 +72,7 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(PlayerForwardMovement());
         girlFriendCursor.SetActive(false);
+        targetSprite.sprite = targetSprites[0];
     }
 
     private void Update()
@@ -142,6 +146,7 @@ if (currentWinThread != null && !_isInfected)
     private void PlayerIsInfected()
     {
         _virusAroundPlayer.SetActive(true);
+        targetSprite.sprite = targetSprites[1];
     }
     IEnumerator PlayerHoverAnimation()
     {
