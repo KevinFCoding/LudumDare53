@@ -32,11 +32,8 @@ public class GameManager : MonoBehaviour
     private string[] defeatTableName = {"Dad", "Granny", "Bro" };
     public bool gameIsPlaying = false;
 
-    private int spam;
-    private int win;
-    private int lose;
+    private bool _isMusicStarted = false;
 
-    private bool _isPaused = false;
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -44,12 +41,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //_drawingManager = FindObjectOfType<DrawingManager>();
-        //SetUpLevel();
-        //SetUpThreadsAndSpawners();
         points = 0;
         _scoreText.text = points.ToString();
-
         _soundManager = GameObject.FindAnyObjectByType<SoundManager>();
     }
 
@@ -68,6 +61,9 @@ public class GameManager : MonoBehaviour
     #region New Scene Set upping
     private void SetUpLevel()
     {
+        _player.SetCurrentWinThread(null);
+        _player.SetCurrentSpamThread(null);
+
         _mailBoxes.Clear();
         MailBox[] tempTab = GameObject.FindObjectsOfType<MailBox>();
         foreach (MailBox mailbox in tempTab)
@@ -89,38 +85,25 @@ public class GameManager : MonoBehaviour
     private void SetUpBoxes()
     {
         if (_mailBoxes.Count <= 0) return;
-        if (_mailBoxes.Count == 1) PlaceBox("Win"); //_mailboxes[0].MailBoxName("Win");
+        if (_mailBoxes.Count == 1) PlaceBox("Win");
         else if (_mailBoxes.Count == 2)
         {
             PlaceBox("Win");
             PlaceBox("Spam");
-            //_mailboxes[0].MailBoxName("Win");
-            //_mailboxes[1].MailBoxName("Spam");
         }
         else if (_mailBoxes.Count >= 3)
         {
             PlaceBox("Win");
             PlaceBox("Spam");
 
+            
             for (int i = 0; i < _mailBoxes.Count - 2; i++)
             {
-                PlaceBox(defeatTableName[i]);
+                if(i < defeatTableName.Length)
+                {
+                    PlaceBox(defeatTableName[i]);
+                }
             }
-
-            // spam = Random.Range(0, _mailboxes.Count);
-            // _mailboxes[spam].MailBoxName("Spam");
-            // _mailboxes.RemoveAt(spam);
-
-            //win = Random.Range(0, _mailboxes.Count);
-            // _mailboxes[win].MailBoxName("Win");
-            // _mailboxes.RemoveAt(win);
-            // for (int i = 0; i < _mailboxes.Count; i++)
-            // {
-            //     int number = Random.Range(0, _mailboxes.Count);
-
-            //     Debug.Log("test : " + number + " " + _mailboxes.Count);
-            //     _mailboxes[number].MailBoxName(defeatTableName[i]);
-            // }
         }
     }
     private void SetUpThreadsAndSpawners()
@@ -149,10 +132,13 @@ public class GameManager : MonoBehaviour
     }
     private void LaunchVlopAnimation()
     {
-        _soundManager.StartAudio();
+        if(!_isMusicStarted)
+        {
+            _soundManager.StartAudio();
+            _isMusicStarted = true;
+        }
         _player.GameStarted();
     }
-
     private void PlaceBox(string name)
     {
         int random = UnityEngine.Random.Range(0, _mailBoxes.Count);
@@ -164,6 +150,11 @@ public class GameManager : MonoBehaviour
         if(_mailBoxes[random].nameBox == "" || _mailBoxes[random].nameBox == null)
         {
             _mailBoxes[random].MailBoxName(name);
+                
+            if(name == "Win")
+            _player.SetCurrentWinThread(_mailBoxes[random].gameObject);
+            if (name == "Spam")
+                _player.SetCurrentSpamThread(_mailBoxes[random].gameObject);
         }
     }
     #endregion

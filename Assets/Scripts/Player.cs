@@ -16,8 +16,27 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip damageSound;
     [SerializeField] ParticleSystem _particules;
 
+    [Header("GFX STRAFE")]
+    [SerializeField] float _speedStrafe = 10f;
+    [SerializeField] float _strafeFrequency;
+    [SerializeField] float _strafeMagnitude;
+
+    [Header("GFX SCALE")]
+    [SerializeField] float _frequency = 1;
+    [SerializeField] float  magnitude = .2f;
+
+    [Header("TARGET INDICATOR")]
+    [SerializeField] GameObject currentWinThread;
+    [SerializeField] GameObject currentSpamThread;
+
+    [SerializeField] SpriteRenderer targetSprite;
+    [SerializeField] Sprite[] targetSprites;
+
+    [SerializeField] GameObject girlFriendCursor;
+
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
+
 
     private List<WayPoint> _nextWaypoint;
 
@@ -60,6 +79,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         StartCoroutine(PlayerForwardMovement());
+        girlFriendCursor.SetActive(false);
+        targetSprite.sprite = targetSprites[0];
     }
 
     private void Update()
@@ -88,12 +109,28 @@ public class Player : MonoBehaviour
 
         }
 
+        if (girlFriendCursor.activeSelf)
+        {
+if (currentWinThread != null && !_isInfected)
+        {
+            girlFriendCursor.transform.LookAt(currentWinThread.transform.position);
+        }
+
+        if (currentSpamThread != null && _isInfected)
+        {
+            girlFriendCursor.transform.LookAt(currentSpamThread.transform.position);
+        }
+        }
+
+        
+
 
     }
 
     public void StopPlayer()
     {
         _speed = 0;
+        girlFriendCursor.SetActive(false);
         _particules.gameObject.SetActive(false);
         _particules.Stop();
 
@@ -110,12 +147,40 @@ public class Player : MonoBehaviour
         StartCoroutine(GFXGoBackAnimation());
     }
 
+    public void SetCurrentWinThread(GameObject winThread)
+    {
+        currentWinThread = winThread;
+    }
+
+    public void SetCurrentSpamThread(GameObject spamThread)
+    {
+        currentSpamThread = spamThread;
+    }
+
     private void PlayerIsInfected()
     {
         _audioSource.PlayOneShot(damageSound, 5f);
 
         _virusAroundPlayer.SetActive(true);
+        targetSprite.sprite = targetSprites[1];
 
+    }
+    IEnumerator PlayerHoverAnimation()
+    {
+
+        Vector3 baseLocalScale = _playerGFX.transform.localScale; 
+        while (true)
+        {
+
+            // Change Scale for Breathing Effect
+            _playerGFX.transform.localScale = _playerGFX.transform.localScale * Mathf.Sin(Time.time * _frequency) * magnitude + baseLocalScale;
+            
+            // Strafe tot give Movement
+            Vector3 upAndDownMovement = Mathf.Cos(Time.time * _strafeFrequency) * _strafeMagnitude * transform.right;
+            _playerGFX.transform.Translate(upAndDownMovement * _speedStrafe * Time.deltaTime);
+
+            yield return null;
+        }
     }
 
     IEnumerator PlayerSpinAnimation(float timeOfSpin)
@@ -143,15 +208,13 @@ public class Player : MonoBehaviour
     {
 
         float time = 0;
-        StartCoroutine(PlayerSpinAnimation(2));
+        StartCoroutine(PlayerSpinAnimation(1.5f));
 
         Vector3 startPosition = _playerGFX.transform.position;
         Vector3 endPosition = gameObject.transform.position;
 
         Vector3 startScale = _playerGFX.transform.localScale;
-        Vector3 endScale = new Vector3(2, 4, 4);
-
-
+        Vector3 endScale = new Vector3(4, 4, 4);
         while (time < 2)
         {
             time += Time.deltaTime;
@@ -163,6 +226,8 @@ public class Player : MonoBehaviour
         if(time > 2)
         {
             _speed = 5;
+            girlFriendCursor.SetActive(true);
+            StartCoroutine(PlayerHoverAnimation());
             _particules.gameObject.SetActive(true);
             _particules.Play();
 
@@ -190,7 +255,6 @@ public class Player : MonoBehaviour
         Vector3 endPos = waypoints.startPoint.position;
         float distance = Vector3.Distance(startPos, endPos);
         float timeToReach = distance / _speed;
-        StartCoroutine(PlayerSpinAnimation(timeToReach));
         while (time < timeToReach)
         {
             time += Time.deltaTime;
