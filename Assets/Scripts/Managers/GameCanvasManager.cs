@@ -16,6 +16,7 @@ public class GameCanvasManager : MonoBehaviour
 
     private void Start()
     {
+        _audioSource = GameObject.FindAnyObjectByType<AudioSource>();
         LaunchNudeAnim();
     }
 
