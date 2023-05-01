@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
 
+
     private List<WayPoint> _nextWaypoint;
 
     private void Awake()

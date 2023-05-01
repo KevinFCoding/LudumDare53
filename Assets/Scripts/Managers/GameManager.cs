@@ -32,11 +32,8 @@ public class GameManager : MonoBehaviour
     private string[] defeatTableName = {"Dad", "Granny", "Bro" };
     public bool gameIsPlaying = false;
 
-    private int spam;
-    private int win;
-    private int lose;
+    private bool _isMusicStarted = false;
 
-    private bool _isPaused = false;
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -44,12 +41,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //_drawingManager = FindObjectOfType<DrawingManager>();
-        //SetUpLevel();
-        //SetUpThreadsAndSpawners();
         points = 0;
         _scoreText.text = points.ToString();
-
         _soundManager = GameObject.FindAnyObjectByType<SoundManager>();
     }
 
@@ -89,13 +82,11 @@ public class GameManager : MonoBehaviour
     private void SetUpBoxes()
     {
         if (_mailBoxes.Count <= 0) return;
-        if (_mailBoxes.Count == 1) PlaceBox("Win"); //_mailboxes[0].MailBoxName("Win");
+        if (_mailBoxes.Count == 1) PlaceBox("Win");
         else if (_mailBoxes.Count == 2)
         {
             PlaceBox("Win");
             PlaceBox("Spam");
-            //_mailboxes[0].MailBoxName("Win");
-            //_mailboxes[1].MailBoxName("Spam");
         }
         else if (_mailBoxes.Count >= 3)
         {
@@ -106,21 +97,6 @@ public class GameManager : MonoBehaviour
             {
                 PlaceBox(defeatTableName[i]);
             }
-
-            // spam = Random.Range(0, _mailboxes.Count);
-            // _mailboxes[spam].MailBoxName("Spam");
-            // _mailboxes.RemoveAt(spam);
-
-            //win = Random.Range(0, _mailboxes.Count);
-            // _mailboxes[win].MailBoxName("Win");
-            // _mailboxes.RemoveAt(win);
-            // for (int i = 0; i < _mailboxes.Count; i++)
-            // {
-            //     int number = Random.Range(0, _mailboxes.Count);
-
-            //     Debug.Log("test : " + number + " " + _mailboxes.Count);
-            //     _mailboxes[number].MailBoxName(defeatTableName[i]);
-            // }
         }
     }
     private void SetUpThreadsAndSpawners()
@@ -149,7 +125,11 @@ public class GameManager : MonoBehaviour
     }
     private void LaunchVlopAnimation()
     {
-        _soundManager.StartAudio();
+        if(!_isMusicStarted)
+        {
+            _soundManager.StartAudio();
+            _isMusicStarted = true;
+        }
         _player.GameStarted();
     }
 
