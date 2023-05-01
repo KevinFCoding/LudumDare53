@@ -1513,7 +1513,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1100318547, guid: 736afeb29b937124694df69df412c5f1, type: 3}
+  m_Sprite: {fileID: -1026522834, guid: 1ad80b7478ff8044bb193e4739e79baa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1869,7 +1869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e7af13e0b998249b67f9a07e4957dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 0}
+  _soundManager: {fileID: 0}
   audioSource: {fileID: 0}
   winSound: {fileID: 8300000, guid: e6049133aa43ca149bf352e21d339926, type: 3}
   looseSound: {fileID: 8300000, guid: abb2bcb458549cc45b406d968301f90e, type: 3}

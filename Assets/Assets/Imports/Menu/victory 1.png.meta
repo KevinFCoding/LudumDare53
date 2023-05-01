@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 736afeb29b937124694df69df412c5f1
+guid: 1ad80b7478ff8044bb193e4739e79baa
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: victory_0
+      name: victory 1_0
       rect:
         serializedVersion: 2
         x: 1641
@@ -119,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8ca544cf518d6a429aa7046fa089425
-      internalID: 1100318547
+      spriteID: b6f0b0d00b25b784583bf25f0f80c5e4
+      internalID: -1026522834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: victory_1
+      name: victory 1_1
       rect:
         serializedVersion: 2
         x: 2028
@@ -140,14 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad6198872f8ec204ba11f742aa6eb0db
-      internalID: 1737601637
+      spriteID: a0c0409c4905ec44d9f6c6409eff023d
+      internalID: 998473422
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: victory_2
+      name: victory 1_2
       rect:
         serializedVersion: 2
         x: 1960
@@ -161,8 +161,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eaf7315bba3ca3c42bce6df17b3434be
-      internalID: 2032130648
+      spriteID: cf13b0479c88ecd4b98dd85a0c3d3762
+      internalID: 936235602
       vertices: []
       indices: 
       edges: []
@@ -170,7 +170,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 58c0ec700f023184f95ea119886b52af
+    spriteID: 5d985796b0228524a916aa4516c9ed4c
     internalID: 0
     vertices: []
     indices: 
@@ -178,9 +178,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      victory_0: 1100318547
-      victory_1: 1737601637
-      victory_2: 2032130648
+      victory 1_0: -1026522834
+      victory 1_1: 998473422
+      victory 1_2: 936235602
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
