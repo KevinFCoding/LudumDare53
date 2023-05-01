@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] Material _playerMat;
     [SerializeField] GameObject _virusAroundPlayer;
     [SerializeField] GameObject _playerGFX;
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip damageSound;
+    [SerializeField] ParticleSystem _particules;
 
     [Header("GFX STRAFE")]
     [SerializeField] float _speedStrafe = 10f;
@@ -23,15 +26,28 @@ public class Player : MonoBehaviour
     [SerializeField] float _frequency = 1;
     [SerializeField] float magnitude = .2f;
 
+    [Header("TARGET INDICATOR")]
+    [SerializeField] GameObject currentWinThread;
+    [SerializeField] GameObject currentSpamThread;
+
+    [SerializeField] SpriteRenderer targetSprite;
+    [SerializeField] Sprite[] targetSprites;
+
+    [SerializeField] GameObject girlFriendCursor;
 
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
+
 
     private List<WayPoint> _nextWaypoint;
 
     private void Awake()
     {
+        _audioSource = GameObject.FindAnyObjectByType<SoundManager>().GetComponentInChildren<AudioSource>();
         _nextWaypoint = new();
+        _particules = gameObject.GetComponentInChildren<ParticleSystem>();
+        _particules.gameObject.SetActive(false);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -65,6 +81,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         StartCoroutine(PlayerForwardMovement());
+        girlFriendCursor.SetActive(false);
+        targetSprite.sprite = targetSprites[0];
     }
 
     private void Update()
@@ -92,15 +110,33 @@ public class Player : MonoBehaviour
             }
 
         }
+
+        if (girlFriendCursor.activeSelf)
+        {
+            if (currentWinThread != null && !_isInfected)
+            {
+                girlFriendCursor.transform.LookAt(currentWinThread.transform.position);
+            }
+
+            if (currentSpamThread != null && _isInfected)
+            {
+                girlFriendCursor.transform.LookAt(currentSpamThread.transform.position);
+            }
+        }
     }
 
     public void StopPlayer()
     {
         _speed = 0;
+        girlFriendCursor.SetActive(false);
+        _particules.gameObject.SetActive(false);
+        _particules.Stop();
+
     }
 
     public bool isPlayerInfected()
     {
+
         return _isInfected;
     }
 
@@ -114,9 +150,23 @@ public class Player : MonoBehaviour
         StartCoroutine(GFXGoBackAnimation());
     }
 
+    public void SetCurrentWinThread(GameObject winThread)
+    {
+        currentWinThread = winThread;
+    }
+
+    public void SetCurrentSpamThread(GameObject spamThread)
+    {
+        currentSpamThread = spamThread;
+    }
+
     private void PlayerIsInfected()
     {
+        _audioSource.PlayOneShot(damageSound, 5f);
+
         _virusAroundPlayer.SetActive(true);
+        targetSprite.sprite = targetSprites[1];
+
     }
     IEnumerator PlayerHoverAnimation()
     {
@@ -143,7 +193,7 @@ public class Player : MonoBehaviour
         while (time < timeOfSpin)
         {
             time += Time.deltaTime;
-            _playerGFX.transform.Rotate(Vector3.forward * 300 * Time.deltaTime, Space.Self);
+            _playerGFX.transform.Rotate(Vector3.forward * 250 * Time.deltaTime, Space.Self);
             yield return null;
         };
         if (time >= timeOfSpin)
@@ -160,6 +210,7 @@ public class Player : MonoBehaviour
 
     IEnumerator GFXGoBackAnimation()
     {
+
         float time = 0;
         StartCoroutine(PlayerSpinAnimation(1.5f));
 
@@ -167,18 +218,23 @@ public class Player : MonoBehaviour
         Vector3 endPosition = gameObject.transform.position;
 
         Vector3 startScale = _playerGFX.transform.localScale;
-        Vector3 endScale = new Vector3(2, 4, 4);
+        Vector3 endScale = new Vector3(4, 4, 4);
         while (time < 2)
         {
             time += Time.deltaTime;
             _playerGFX.transform.localPosition = Vector3.Lerp(startPosition, endPosition, time / 2);
             _playerGFX.transform.localScale = Vector3.Lerp(startScale, endScale, time / 2);
+
             yield return null;
         };
         if (time > 2)
         {
             _speed = 5;
+            girlFriendCursor.SetActive(true);
             StartCoroutine(PlayerHoverAnimation());
+            _particules.gameObject.SetActive(true);
+            _particules.Play();
+
         }
     }
 

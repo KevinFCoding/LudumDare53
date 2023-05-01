@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 1
   _frequency: 2
-  magnitude: 3
+  magnitude: 6
 --- !u!1 &5757512797767507332
 GameObject:
   m_ObjectHideFlags: 0
