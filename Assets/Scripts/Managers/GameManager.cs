@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public bool perfectDelivery = true;
 
     private string[] defeatTableName = {"Dad", "Granny", "Bro" };
-    private bool _gameIsPlaying = false;
+    public bool gameIsPlaying = false;
 
     private int spam;
     private int win;
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         _drawingManager = FindObjectOfType<DrawingManager>();
-        if (_gameIsPlaying)
+        if (gameIsPlaying)
         {
             EndCanvasReset();
             SetUpLevel();
@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
 
     public void StartPlaying()
     {
-        _gameIsPlaying = true;
+        gameIsPlaying = true;
     }
 
     public void PlayerHasDeliveredTheMail(string boxDelivered) {
@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        _gameIsPlaying = false;
+        gameIsPlaying = false;
         _levelManager.LoadGameOver();
     }
     #endregion
