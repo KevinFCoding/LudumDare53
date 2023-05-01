@@ -26,7 +26,6 @@ public class LevelManager: MonoBehaviour
             _gameManager.SceneHasChanged();
             _currentScene = SceneManager.GetActiveScene().name;
         }
-        if (Input.GetKeyDown(KeyCode.Space)) LoadLevelOne();
     }
 
     public void LoadLevelOne()
@@ -44,6 +43,6 @@ public class LevelManager: MonoBehaviour
 
     public void LoadGameOver()
     {
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("MainMenuScene");
     }
 }
