@@ -59,20 +59,13 @@ public class EndingManager : MonoBehaviour
 
     public void GetAllParticles()
     {
-        //_winParticules = GameObject.FindObjectsOfTypeAll<>();
         GameObject FindVlop = GameObject.FindObjectOfType<Player>().gameObject;
         GameObject findParticles = FindVlop.transform.GetChild(FindVlop.transform.childCount - 1).gameObject; ;
         Debug.Log("PARTICULES " + findParticles.name + " is empty");
-        //GameObject findParticles = FindVlop.transform.GetChild(FindVlop.transform.GetChildCount() - 1).gameObject;
-        //GameObject[] ChildNames = findParticles.GetComponentsInChildren<GameObject>(includeInactive: true);
         ParticleSystem[] ChildNames = findParticles.GetComponentsInChildren<ParticleSystem>(includeInactive: true);
-
-        Debug.Log("CHILD NAMES AAA " + ChildNames);
-        Debug.Log("CHILD NAMES LENGTH  AAA" + ChildNames.Length);
         for (int i = 0; i < ChildNames.Length; i++)
         {
             string name = ChildNames[i].gameObject.name;
-            Debug.Log("NAME " + name);
             switch (name)
             {
                 case "Win_part":

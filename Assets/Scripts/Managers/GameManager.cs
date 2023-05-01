@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = Unity.Mathematics.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Player _player;
 
     [Header("Boxes and Set up")]
-    [SerializeField] List<MailBox> _mailboxes;
+    [SerializeField] List<MailBox> _mailBoxes;
     [SerializeField] List<GameObject> _deliveryThreads;
     [SerializeField] List<Spawner> _spawners;
 
@@ -62,11 +61,11 @@ public class GameManager : MonoBehaviour
     #region New Scene Set upping
     private void SetUpLevel()
     {
-        _mailboxes.Clear();
+        _mailBoxes.Clear();
         MailBox[] tempTab = GameObject.FindObjectsOfType<MailBox>();
         foreach (MailBox mailbox in tempTab)
         {
-            _mailboxes.Add(mailbox);
+            _mailBoxes.Add(mailbox);
         }
         SetUpBoxes();
     }
@@ -82,21 +81,21 @@ public class GameManager : MonoBehaviour
 
     private void SetUpBoxes()
     {
-        if (_mailboxes.Count <= 0) return;
-        if (_mailboxes.Count == 1) PlaceBox("Win"); //_mailboxes[0].MailBoxName("Win");
-        else if (_mailboxes.Count == 2)
+        if (_mailBoxes.Count <= 0) return;
+        if (_mailBoxes.Count == 1) PlaceBox("Win"); //_mailboxes[0].MailBoxName("Win");
+        else if (_mailBoxes.Count == 2)
         {
             PlaceBox("Win");
             PlaceBox("Spam");
             //_mailboxes[0].MailBoxName("Win");
             //_mailboxes[1].MailBoxName("Spam");
         }
-        else if (_mailboxes.Count >= 3)
+        else if (_mailBoxes.Count >= 3)
         {
             PlaceBox("Win");
             PlaceBox("Spam");
 
-            for (int i = 0; i < _mailboxes.Count - 2; i++)
+            for (int i = 0; i < _mailBoxes.Count - 2; i++)
             {
                 PlaceBox(defeatTableName[i]);
             }
@@ -148,17 +147,24 @@ public class GameManager : MonoBehaviour
 
     private void PlaceBox(string name)
     {
-        UnityEngine.Random.InitState(System.DateTime.Now.Millisecond);
-        int random = UnityEngine.Random.Range(0, _mailboxes.Count);
+        int random = UnityEngine.Random.Range(0, _mailBoxes.Count);
         int checkCount = 0;
-        while (checkCount < _mailboxes.Count  &&  (_mailboxes[random].nameBox != null || !String.IsNullOrEmpty(_mailboxes[random].nameBox)))
+        //while (checkCount < _mailboxes.Count  &&  (_mailboxes[random].nameBox != null || !String.IsNullOrEmpty(_mailboxes[random].nameBox)))
+        //{
+        //    Debug.Log("Emplacement pris pour l'id : " + random + " : " + _mailboxes[random].nameBox);
+        //    random = UnityEngine.Random.Range(0, _mailboxes.Count);
+        //    checkCount++;
+        //}
+        if (_mailBoxes[random].nameBox != null)
         {
-            Debug.Log("Emplacement pris pour l'id : " + random + " : " + _mailboxes[random].nameBox);
-            random = UnityEngine.Random.Range(0, _mailboxes.Count);
-            checkCount++;
+            PlaceBox(name);
+            return;
         }
-        _mailboxes[random].MailBoxName(name);
-        Debug.Log(name + " placed at "+random);
+        if(_mailBoxes[random].nameBox == "" || _mailBoxes[random].nameBox == null)
+        {
+            Debug.Log("La box numéro : " + random + " a pour le nom : " + name);
+            _mailBoxes[random].MailBoxName(name);
+        }
     }
     #endregion
 
