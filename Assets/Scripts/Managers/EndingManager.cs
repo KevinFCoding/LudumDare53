@@ -137,7 +137,7 @@ public class EndingManager : MonoBehaviour
 
     public void Infected()
     {
-        StartCoroutine(ActiveSpamPanel());
+        StartCoroutine(ActiveInfectedPanel());
 
     }
 

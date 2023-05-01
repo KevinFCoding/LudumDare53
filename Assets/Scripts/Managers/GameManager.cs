@@ -180,9 +180,8 @@ public class GameManager : MonoBehaviour
         else if (boxDelivered == "Win")
         {
             points += 4;
-            //if (_player.isPlayerInfected()) _endingManager.Virused();
-            _endingManager.Win();
-            //else _endingManager.Win();
+            if (_player.isPlayerInfected()) _endingManager.Infected();
+            else _endingManager.Win();
         } else if (boxDelivered == "Dad")
         {
             perfectDelivery = false;
