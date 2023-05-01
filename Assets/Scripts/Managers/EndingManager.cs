@@ -113,7 +113,7 @@ public class EndingManager : MonoBehaviour
 
     public void Win()
     {
-        audioSource.PlayOneShot(youGotMail, 5);
+        audioSource.PlayOneShot(youGotMail, 3);
 
         _victoryPanel.SetActive(true);
         StartCoroutine(ActiveEndingWinPanel());
@@ -139,8 +139,6 @@ public class EndingManager : MonoBehaviour
         _spamPanel.SetActive(true);
 
 
-        yield return new WaitForSeconds(0.5f);
-        audioSource.PlayOneShot(stampSound, 2);
         yield return new WaitForSeconds(0.5f);
         _spamParticules.SetActive(true);
 
