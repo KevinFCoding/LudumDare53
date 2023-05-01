@@ -12,6 +12,7 @@ public class SettingsWindow : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip honk;
     public Slider musicSlider;
+    [SerializeField] GameObject _bestGame;
     public Slider soundSlider;
     void Start()
     {
@@ -54,5 +55,18 @@ public class SettingsWindow : MonoBehaviour
     {
         audioSource.PlayOneShot(honk);
 
+
+      
     }
+    public void OpenTheBestFeature()
+    {
+        _bestGame.SetActive(true);
+    }
+
+    public void CloseTheBestFeature()
+    {
+        _bestGame.SetActive(false);
+
+    }
+
 }
