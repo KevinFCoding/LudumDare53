@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject _playerGFX;
     [SerializeField] AudioSource _audioSource;
     [SerializeField] AudioClip damageSound;
+    [SerializeField] ParticleSystem _particules;
 
     private bool _isPlayerOnWayPoint = false;
     private bool _isTranslatingToWaypoint = false;
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour
     {
         _audioSource = GameObject.FindAnyObjectByType<SoundManager>().GetComponentInChildren<AudioSource>();
         _nextWaypoint = new();
+        _particules = gameObject.GetComponentInChildren<ParticleSystem>();
+        _particules.gameObject.SetActive(false);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -83,11 +87,16 @@ public class Player : MonoBehaviour
             }
 
         }
+
+
     }
 
     public void StopPlayer()
     {
         _speed = 0;
+        _particules.gameObject.SetActive(false);
+        _particules.Stop();
+
     }
 
     public bool isPlayerInfected()
@@ -132,6 +141,7 @@ public class Player : MonoBehaviour
 
     IEnumerator GFXGoBackAnimation()
     {
+
         float time = 0;
         StartCoroutine(PlayerSpinAnimation(2));
 
@@ -140,16 +150,22 @@ public class Player : MonoBehaviour
 
         Vector3 startScale = _playerGFX.transform.localScale;
         Vector3 endScale = new Vector3(2, 4, 4);
+
+
         while (time < 2)
         {
             time += Time.deltaTime;
             _playerGFX.transform.localPosition = Vector3.Lerp(startPosition, endPosition, time / 2);
             _playerGFX.transform.localScale = Vector3.Lerp(startScale, endScale, time / 2);
+
             yield return null;
         };
         if(time > 2)
         {
             _speed = 5;
+            _particules.gameObject.SetActive(true);
+            _particules.Play();
+
         }
     }
 
