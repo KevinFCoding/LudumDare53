@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f67babfb60c9d4e9cfecf5385dfb11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _baseCursorTexture: {fileID: 2800000, guid: fa00cbc6e6cc0d34e990110405f6b552, type: 3}
+  _hoverCursorTexture: {fileID: 2800000, guid: faf6c9f4e9074a941bc8bb496411ba69, type: 3}
 --- !u!1 &176602970086140548
 GameObject:
   m_ObjectHideFlags: 0
