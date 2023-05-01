@@ -18,6 +18,7 @@ public class PauseMenuManager : MonoBehaviour
 
     [SerializeField] SettingsWindow _settingsWindows;
     [SerializeField] AudioClip errorClip;
+<<<<<<< HEAD:Assets/Scripts/Managers/PauseMenuManager.cs
 
     private AudioSource _audioSource;
     private void Awake()
@@ -30,6 +31,10 @@ public class PauseMenuManager : MonoBehaviour
         _audioSource = GameObject.FindAnyObjectByType<AudioSource>();
 
     }
+=======
+    
+  
+>>>>>>> main:Assets/Scripts/PauseMenu.cs
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -74,7 +79,11 @@ public class PauseMenuManager : MonoBehaviour
 
     public void MainMenu()
     {
+<<<<<<< HEAD:Assets/Scripts/Managers/PauseMenuManager.cs
         Debug.Log("MainMenu PRESSED");
+=======
+        Time.timeScale = 1f;
+>>>>>>> main:Assets/Scripts/PauseMenu.cs
         SceneManager.LoadScene("MainScene");
     }
 
