@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     [SerializeField] Material _playerMat;
     [SerializeField] GameObject _virusAroundPlayer;
     [SerializeField] GameObject _playerGFX;
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip damageSound;
+    [SerializeField] ParticleSystem _particules;
 
     [Header("GFX STRAFE")]
     [SerializeField] float _speedStrafe = 10f;
@@ -39,7 +42,11 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        _audioSource = GameObject.FindAnyObjectByType<SoundManager>().GetComponentInChildren<AudioSource>();
         _nextWaypoint = new();
+        _particules = gameObject.GetComponentInChildren<ParticleSystem>();
+        _particules.gameObject.SetActive(false);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -116,16 +123,22 @@ if (currentWinThread != null && !_isInfected)
         }
 
         
+
+
     }
 
     public void StopPlayer()
     {
         _speed = 0;
         girlFriendCursor.SetActive(false);
+        _particules.gameObject.SetActive(false);
+        _particules.Stop();
+
     }
 
     public bool isPlayerInfected()
     {
+
         return _isInfected;
     }
 
@@ -146,8 +159,11 @@ if (currentWinThread != null && !_isInfected)
 
     private void PlayerIsInfected()
     {
+        _audioSource.PlayOneShot(damageSound, 5f);
+
         _virusAroundPlayer.SetActive(true);
         targetSprite.sprite = targetSprites[1];
+
     }
     IEnumerator PlayerHoverAnimation()
     {
@@ -190,6 +206,7 @@ if (currentWinThread != null && !_isInfected)
 
     IEnumerator GFXGoBackAnimation()
     {
+
         float time = 0;
         StartCoroutine(PlayerSpinAnimation(1.5f));
 
@@ -203,6 +220,7 @@ if (currentWinThread != null && !_isInfected)
             time += Time.deltaTime;
             _playerGFX.transform.localPosition = Vector3.Lerp(startPosition, endPosition, time / 2);
             _playerGFX.transform.localScale = Vector3.Lerp(startScale, endScale, time / 2);
+
             yield return null;
         };
         if(time > 2)
@@ -210,6 +228,9 @@ if (currentWinThread != null && !_isInfected)
             _speed = 5;
             girlFriendCursor.SetActive(true);
             StartCoroutine(PlayerHoverAnimation());
+            _particules.gameObject.SetActive(true);
+            _particules.Play();
+
         }
     }
 

@@ -994,14 +994,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 809240382978463301, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7473383515736146266, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
       propertyPath: m_Name
       value: Vlop
       objectReference: {fileID: 0}
+    - target: {fileID: 7473383515736146267, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
+      propertyPath: _particules
+      value: 
+      objectReference: {fileID: 1559048899}
     - target: {fileID: 7473383515736146271, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1051,6 +1051,11 @@ PrefabInstance:
 --- !u!1 &1559048898 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5725443994036999885, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
+  m_PrefabInstance: {fileID: 1559048897}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1559048899 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 970728399720671725, guid: 4a9aefa09967a5e4bb6339040a260241, type: 3}
   m_PrefabInstance: {fileID: 1559048897}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1763597836
