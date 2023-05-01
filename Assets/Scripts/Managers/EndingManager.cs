@@ -61,7 +61,6 @@ public class EndingManager : MonoBehaviour
     {
         GameObject FindVlop = GameObject.FindObjectOfType<Player>().gameObject;
         GameObject findParticles = FindVlop.transform.GetChild(FindVlop.transform.childCount - 1).gameObject; ;
-        Debug.Log("PARTICULES " + findParticles.name + " is empty");
         ParticleSystem[] ChildNames = findParticles.GetComponentsInChildren<ParticleSystem>(includeInactive: true);
         for (int i = 0; i < ChildNames.Length; i++)
         {

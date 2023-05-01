@@ -7,20 +7,15 @@ public class DeliveryThread : MonoBehaviour
     [SerializeField] private Texture2D _baseCursorTexture;
     [SerializeField] private Texture2D _hoverCursorTexture;
 
-    // Start is called before the first frame update
-    void Start()
+    private bool _isPaused = false;
+
+    public void GamePaused(bool isPaused)
     {
-
+        _isPaused = isPaused;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnMouseOver()
     {
+        if (_isPaused) return;
         Cursor.SetCursor(_hoverCursorTexture, new Vector2(_hoverCursorTexture.width / 2, _hoverCursorTexture.height / 2), CursorMode.Auto);
     }
 
