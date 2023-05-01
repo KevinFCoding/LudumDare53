@@ -229,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176602970514081173}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 38.18}
+  m_LocalPosition: {x: 0, y: 0.49, z: 38.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnablesVirus:
   - {fileID: 2141886458785027830, guid: 448830e20b1eccb41a34471040512b09, type: 3}
-  - {fileID: 2141886458785027830, guid: 30109e3fd953f5c4b93aa377329fc59d, type: 3}
+  - {fileID: 2141886458785027830, guid: 02a901e679d49004d81a0a63f3e1efd4, type: 3}
   - {fileID: 2141886458785027830, guid: 54a2c4def9a273446b1f27a9eb3321d0, type: 3}
 --- !u!1 &2137144220164389006
 GameObject:
@@ -277,7 +277,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137144220164389006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.38}
+  m_LocalPosition: {x: 0, y: 0.49, z: 2.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnablesVirus:
   - {fileID: 2141886458785027830, guid: 448830e20b1eccb41a34471040512b09, type: 3}
-  - {fileID: 2141886458785027830, guid: 30109e3fd953f5c4b93aa377329fc59d, type: 3}
+  - {fileID: 2141886458785027830, guid: 02a901e679d49004d81a0a63f3e1efd4, type: 3}
   - {fileID: 2141886458785027830, guid: 54a2c4def9a273446b1f27a9eb3321d0, type: 3}
 --- !u!1 &2872171782998183621
 GameObject:
@@ -325,7 +325,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2872171782998183621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 11.35}
+  m_LocalPosition: {x: 0, y: 0.49, z: 11.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -346,7 +346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnablesVirus:
   - {fileID: 2141886458785027830, guid: 448830e20b1eccb41a34471040512b09, type: 3}
-  - {fileID: 2141886458785027830, guid: 30109e3fd953f5c4b93aa377329fc59d, type: 3}
+  - {fileID: 2141886458785027830, guid: 02a901e679d49004d81a0a63f3e1efd4, type: 3}
   - {fileID: 2141886458785027830, guid: 54a2c4def9a273446b1f27a9eb3321d0, type: 3}
 --- !u!1 &7287617010982139958
 GameObject:
@@ -373,7 +373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7287617010982139958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 26.81}
+  m_LocalPosition: {x: 0, y: 0.49, z: 26.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnablesVirus:
   - {fileID: 2141886458785027830, guid: 448830e20b1eccb41a34471040512b09, type: 3}
-  - {fileID: 2141886458785027830, guid: 30109e3fd953f5c4b93aa377329fc59d, type: 3}
+  - {fileID: 2141886458785027830, guid: 02a901e679d49004d81a0a63f3e1efd4, type: 3}
   - {fileID: 2141886458785027830, guid: 54a2c4def9a273446b1f27a9eb3321d0, type: 3}
 --- !u!1 &7426623322436982151
 GameObject:
@@ -421,7 +421,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7426623322436982151}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 33.47}
+  m_LocalPosition: {x: 0, y: 0.49, z: 33.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnablesVirus:
   - {fileID: 2141886458785027830, guid: 448830e20b1eccb41a34471040512b09, type: 3}
-  - {fileID: 2141886458785027830, guid: 30109e3fd953f5c4b93aa377329fc59d, type: 3}
+  - {fileID: 2141886458785027830, guid: 02a901e679d49004d81a0a63f3e1efd4, type: 3}
   - {fileID: 2141886458785027830, guid: 54a2c4def9a273446b1f27a9eb3321d0, type: 3}
 --- !u!1 &7583448961988051413
 GameObject:
@@ -469,7 +469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7583448961988051413}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 18.89}
+  m_LocalPosition: {x: 0, y: 0.49, z: 18.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -490,7 +490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnablesVirus:
   - {fileID: 2141886458785027830, guid: 448830e20b1eccb41a34471040512b09, type: 3}
-  - {fileID: 2141886458785027830, guid: 30109e3fd953f5c4b93aa377329fc59d, type: 3}
+  - {fileID: 2141886458785027830, guid: 02a901e679d49004d81a0a63f3e1efd4, type: 3}
   - {fileID: 2141886458785027830, guid: 54a2c4def9a273446b1f27a9eb3321d0, type: 3}
 --- !u!1001 &6129452707698693223
 PrefabInstance:

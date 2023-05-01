@@ -31,6 +31,17 @@ public class PauseMenu : MonoBehaviour
                 Paused();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Paused();
+            }
+        }
     }
 
     public void Paused()

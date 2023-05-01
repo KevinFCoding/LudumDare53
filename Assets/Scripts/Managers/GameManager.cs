@@ -130,8 +130,17 @@ public class GameManager : MonoBehaviour
             _spawners.Add(dt.gameObject.GetComponentInParent<Spawner>());
         }
         _drawingManager.SetThread(_deliveryThreads);
+        StartCoroutine(SpawnViruses());
     }
-     
+
+    IEnumerator SpawnViruses()
+    {
+        yield return new WaitForSeconds(2f);
+        for (int i = 0; i < _spawners.Count; i++)
+        {
+            _spawners[i].ActivateSpawners();
+        }
+    }
     private void LaunchVlopAnimation()
     {
         _player.GameStarted();
@@ -171,7 +180,9 @@ public class GameManager : MonoBehaviour
         else if (boxDelivered == "Win")
         {
             points += 4;
+            //if (_player.isPlayerInfected()) _endingManager.Virused();
             _endingManager.Win();
+            //else _endingManager.Win();
         } else if (boxDelivered == "Dad")
         {
             perfectDelivery = false;
