@@ -40,8 +40,6 @@ public class MainMenu : MonoBehaviour
     public void ShowMainMenu()
     {
         _launchWindow.SetActive(false);
-        print("Launch windows close");
-
         StartCoroutine(ActiveIcons());
 
     }
@@ -64,7 +62,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("StartGameScene");
+        SceneManager.LoadScene("Level1");
     }
 
 

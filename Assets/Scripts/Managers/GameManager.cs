@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     [Header("Boxes and Set up")]
     [SerializeField] List<MailBox> _mailboxes;
     [SerializeField] List<GameObject> _deliveryThreads;
-    [SerializeField] List<GameObject> _spawners;
+    [SerializeField] List<Spawner> _spawners;
 
     [Header("Game Points and Rewards")]
     public int points = 0;
@@ -127,11 +127,20 @@ public class GameManager : MonoBehaviour
         foreach (DeliveryThread dt in tempTab)
         {
             _deliveryThreads.Add(dt.gameObject);
-            _spawners.Add(dt.gameObject.GetComponentInParent<Spawner>().gameObject);
+            _spawners.Add(dt.gameObject.GetComponentInParent<Spawner>());
         }
         _drawingManager.SetThread(_deliveryThreads);
+        StartCoroutine(SpawnViruses());
     }
-     
+
+    IEnumerator SpawnViruses()
+    {
+        yield return new WaitForSeconds(2f);
+        for (int i = 0; i < _spawners.Count; i++)
+        {
+            _spawners[i].ActivateSpawners();
+        }
+    }
     private void LaunchVlopAnimation()
     {
         _player.GameStarted();
@@ -171,7 +180,8 @@ public class GameManager : MonoBehaviour
         else if (boxDelivered == "Win")
         {
             points += 4;
-            _endingManager.Win();
+            if (_player.isPlayerInfected()) _endingManager.Infected();
+            else _endingManager.Win();
         } else if (boxDelivered == "Dad")
         {
             perfectDelivery = false;
@@ -191,7 +201,9 @@ public class GameManager : MonoBehaviour
 
     public void LevelOver()
     {
-        _levelManager.LoadNextLevel();
+        if (SceneManager.GetActiveScene().name == "Level13") GameOver();
+        else _levelManager.LoadNextLevel();
+
     }
 
     public void GameOver()

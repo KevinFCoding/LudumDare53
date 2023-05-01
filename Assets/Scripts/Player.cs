@@ -31,7 +31,8 @@ public class Player : MonoBehaviour
             //Destroy(other.gameObject);
             enemy.HasTouchedPlayer();
             _isInfected = true;
-            PlayerIsInfected(other.gameObject.GetComponent<Enemy>().getVirusName());
+            PlayerIsInfected();
+            //PlayerIsInfected(other.gameObject.GetComponent<Enemy>().getVirusName());
             //gameObject.GetComponent<MeshRenderer>().material = _infectedPlayerMat;
         }
 
@@ -95,24 +96,10 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(GFXGoBackAnimation());
     }
-    //private void CheckForPlayerInput()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.D))
-    //    {
-    //        transform.position = new Vector3(transform.position.x + 3, transform.position.y, transform.position.z);
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.Q))
-    //    {
-    //        transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z);
-    //    }
-    //}
 
-    private void PlayerIsInfected(string virusName)
+    private void PlayerIsInfected()
     {
-        //if(virusName == "HVirus")
-        //if(virusName == "LVirus")
-        //if(virusName == "SVirus")
-        //if(virusName == "AVirus")
+        _virusAroundPlayer.SetActive(true);
     }
 
     IEnumerator PlayerSpinAnimation(float timeOfSpin)

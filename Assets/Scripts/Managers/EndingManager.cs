@@ -126,6 +126,7 @@ public class EndingManager : MonoBehaviour
         _victoryPanel.SetActive(true);
         StartCoroutine(ActiveEndingWinPanel());
     }
+
     public void Spam()
     {
         audioSource.PlayOneShot(stampSound, 5);
@@ -136,7 +137,7 @@ public class EndingManager : MonoBehaviour
 
     public void Infected()
     {
-        StartCoroutine(ActiveSpamPanel());
+        StartCoroutine(ActiveInfectedPanel());
 
     }
 
