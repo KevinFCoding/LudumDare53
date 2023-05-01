@@ -92,7 +92,7 @@ public class EndingManager : MonoBehaviour
     {
         audioSource.PlayOneShot(youGotMail, 5);
 
-        _infectedPanel.SetActive(true);
+        _loosePanel.SetActive(true);
         StartCoroutine(ActiveEndingLoosePanel());
     }
 
