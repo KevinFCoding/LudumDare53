@@ -7,7 +7,9 @@ public class DrawingManager : MonoBehaviour
 {
     [SerializeField] private GameObject wayPointGO;
     [SerializeField] private LineController lineController;
+
     [SerializeField] private LineRenderer line;
+
     [SerializeField] private Camera _mainCamera;
 
 
@@ -21,7 +23,6 @@ public class DrawingManager : MonoBehaviour
     private Vector3 threadEndPointPosition;
 
     private bool hasStartedDrawing;
-    private bool _isPaused;
 
     private void Start()
     {
@@ -30,54 +31,42 @@ public class DrawingManager : MonoBehaviour
     }
     void Update()
     {
-        if (!_isPaused)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            // SphereCast au lieu d'un Raycast pour permettre d'être moins précis sur le clic sur le thread
+            //if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            foreach (RaycastHit hit in Physics.SphereCastAll(ray, 1f))
             {
-                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-                // SphereCast au lieu d'un Raycast pour permettre d'être moins précis sur le clic sur le thread
-                //if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
-                foreach (RaycastHit hit in Physics.SphereCastAll(ray, 1f))
+                if ((hit.transform.gameObject.GetComponent<DeliveryThread>() != null || (hit.transform.gameObject.GetComponent<WayPoint>() != null && hit.transform.name != "StartWayPoint" && hit.transform.name != "EndWayPoint")) && threads.Contains(hit.transform.gameObject))
                 {
-                    if ((hit.transform.gameObject.GetComponent<DeliveryThread>() != null || (hit.transform.gameObject.GetComponent<WayPoint>() != null && hit.transform.name != "StartWayPoint" && hit.transform.name != "EndWayPoint")) && threads.Contains(hit.transform.gameObject))
-                    {
-                        StartDrawing(hit);
-                    }
-                }
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-                //if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
-                foreach (RaycastHit hit in Physics.SphereCastAll(ray, 1f))
-                {
-                    if ((hit.transform.gameObject.GetComponent<DeliveryThread>() != null || (hit.transform.gameObject.GetComponent<WayPoint>() != null && hit.transform.name != "StartWayPoint" && hit.transform.name != "EndWayPoint")) && hasStartedDrawing)
-                    {
-                        StopDrawing(hit);
-                    }
-                    else
-                    {
-                        lineController.DeleteLine();
-                    }
+                    StartDrawing(hit);
                 }
             }
         }
 
-    }
-    public void GamePaused(bool isPaused)
-    {
-        _isPaused = isPaused;
-        foreach (var thread in threads)
+        if (Input.GetMouseButtonUp(0))
         {
-            thread.GetComponent<DeliveryThread>().GamePaused(isPaused);
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            //if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            foreach (RaycastHit hit in Physics.SphereCastAll(ray, 1f))
+            {
+                Debug.Log("HIT UP : " + hit.transform.name);
+                if ((hit.transform.gameObject.GetComponent<DeliveryThread>() != null || (hit.transform.gameObject.GetComponent<WayPoint>() != null && hit.transform.name != "StartWayPoint" && hit.transform.name != "EndWayPoint")) && hasStartedDrawing)
+                {
+                    StopDrawing(hit);
+                }
+                else
+                {
+                    lineController.DeleteLine();
+                }
+            }
         }
-
     }
+
 
     public void StartDrawing(RaycastHit hit)
     {
-        if (_isPaused) return;
         hasStartedDrawing = true;
         GameObject threadSelected = hit.transform.gameObject;
         threadStartPointPosition = threadSelected.transform.position;

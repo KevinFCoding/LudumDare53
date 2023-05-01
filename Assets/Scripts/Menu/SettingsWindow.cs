@@ -16,7 +16,6 @@ public class SettingsWindow : MonoBehaviour
     public Slider soundSlider;
     void Start()
     {
-        audioSource = GameObject.FindObjectOfType<AudioSource>();   
         audioMixer.GetFloat("music", out float musicValueForSlider);
         musicSlider.value = musicValueForSlider;
 

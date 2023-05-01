@@ -185,6 +185,7 @@ public class Player : MonoBehaviour
     IEnumerator PlayerWaypointMovement(WayPoints waypoints)
     {
         float time = 0;
+        Debug.Log(waypoints.startPoint + " " + waypoints.endPoint);
         Vector3 startPos = waypoints.startPoint.position;
         Vector3 endPos = waypoints.endPoint.position;
         float distance = Vector3.Distance(startPos, endPos);

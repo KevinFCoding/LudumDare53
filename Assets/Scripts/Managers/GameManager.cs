@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     private int win;
     private int lose;
 
-    private bool _isPaused = false;
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -163,6 +162,7 @@ public class GameManager : MonoBehaviour
         }
         if(_mailBoxes[random].nameBox == "" || _mailBoxes[random].nameBox == null)
         {
+            Debug.Log("La box numéro : " + random + " a pour le nom : " + name);
             _mailBoxes[random].MailBoxName(name);
         }
     }
