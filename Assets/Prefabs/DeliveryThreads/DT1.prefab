@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 176602969918889687}
   - component: {fileID: 176602969918889686}
   - component: {fileID: 176602969918889673}
+  - component: {fileID: 7599456011788047737}
   m_Layer: 0
   m_Name: Thread
   m_TagString: Untagged
@@ -94,7 +95,7 @@ MeshCollider:
   m_GameObject: {fileID: 176602969918889684}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -113,6 +114,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseCursorTexture: {fileID: 2800000, guid: fa00cbc6e6cc0d34e990110405f6b552, type: 3}
   _hoverCursorTexture: {fileID: 2800000, guid: faf6c9f4e9074a941bc8bb496411ba69, type: 3}
+--- !u!65 &7599456011788047737
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176602969918889684}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.0483468, y: 1.0000002, z: 1.0039499}
+  m_Center: {x: -0.08501164, y: -1.7539108e-18, z: 0.07129824}
 --- !u!1 &176602970086140548
 GameObject:
   m_ObjectHideFlags: 0
