@@ -1619,20 +1619,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 4170966190197482534}
     m_Modifications:
     - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.97700006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.95000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.87130934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.8066374
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 135.446
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 114.613
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -131.504
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -125.968
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2451363311162692784, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
       propertyPath: m_Name
@@ -1989,22 +2005,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4170966190197482534}
     m_Modifications:
-    - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 135.446
-      objectReference: {fileID: 0}
-    - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 114.613
-      objectReference: {fileID: 0}
-    - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -131.504
-      objectReference: {fileID: 0}
-    - target: {fileID: 1566366265089734932, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -125.968
-      objectReference: {fileID: 0}
     - target: {fileID: 2451363311162692784, guid: 94a3c0bcf871fd54286a3e1147a5e817, type: 3}
       propertyPath: m_Name
       value: VideoSettings
